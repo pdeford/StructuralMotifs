@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to Structural Motifs &#8212; Structural Motifs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Instructions" href="installation.html" />
+    <link rel="prev" title="StruMs: Structural Motifs documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation Instructions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="StruMs: Structural Motifs documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Structural Motifs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-structural-motifs">
+<h1>Introduction to Structural Motifs<a class="headerlink" href="#introduction-to-structural-motifs" title="Permalink to this headline">¶</a></h1>
+<p>It has long been observed that transcription factors show
+a higher affinity to some sequences than others, and seem to tolerate
+some variability around these highest-affinity sequences.</p>
+<p>The interaction between sequence specific transcription factors and DNA
+requires compatability at a complex interface of both electrostatics and
+3D structure. Analagous to sequence representations of transcription
+factor binding sites, we assume that transcription factors have a
+preference for a specific shape of the DNA across the binding site and
+will tolerate some variation around that preferred shape.</p>
+<p>Representing the values that a given position-specific shape feature may
+adopt as <span class="math">\(v_j\)</span>, we expect the preference of the transcription
+factor to be normally distributed:</p>
+<div class="math">
+\[v_j \sim \mathcal{N} (\mu_j,\sigma_j^2 )\]</div>
+<p>In which case, given a set <span class="math">\(D\)</span> of <span class="math">\(n\)</span> sequences with
+<span class="math">\(m\)</span> position-specific features that describe a sample of the
+binding sites preferred by a given transcription factor:</p>
+<div class="math">
+\[\begin{split}D =
+\begin{Bmatrix}
+     (v_{11}, &amp; v_{12}, &amp; ... &amp; v_{1m}), \\
+     (v_{21}, &amp; v_{22}, &amp; ... &amp; v_{2m}), \\
+     ... &amp; ... &amp; ... &amp; ...\\
+     (v_{n1}, &amp; v_{n2}, &amp; ... &amp; v_{nm}), \\
+\end{Bmatrix}\end{split}\]</div>
+<p>we can compute a set of parameters <span class="math">\(\phi\)</span> describing the
+specificity of that transcription factor:</p>
+<div class="math">
+\[\begin{split}\phi =
+\begin{Bmatrix}
+     (\mu_1,\sigma_1), \\
+     (\mu_2,\sigma_2), \\
+     ...\\
+     (\mu_m,\sigma_m)
+\end{Bmatrix}\end{split}\]</div>
+<p>If we also assume that each feature and each position is independent,
+then calculating the score <span class="math">\(s\)</span> for the <em>i</em>th sequence becomes:</p>
+<div class="math">
+\[s_i = \prod_{j=1}^m P (v_{ij} | \mu_j,\sigma_j^2 )\]</div>
+<p>In order to avoid underflow issues during computation, all
+computations are done in log space.</p>
+<div class="section" id="de-novo-motif-finding">
+<h2><em>De novo</em> Motif finding<a class="headerlink" href="#de-novo-motif-finding" title="Permalink to this headline">¶</a></h2>
+<p>For <em>de novo</em> motif finding, an expectation maximization approach is
+employed. This approach assumes that there is exactly one occurrence
+of the binding site on each of the training sequences. This based on the
+OOPS model employed by <a class="reference external" href="http://meme-suite.org/doc/meme.html">MEME</a>.</p>
+<div class="section" id="e-step">
+<h3>E-step<a class="headerlink" href="#e-step" title="Permalink to this headline">¶</a></h3>
+<p>The likelihood (<span class="math">\(l_{ij}\)</span>) of the <span class="math">\(j\)</span>th position in the
+<span class="math">\(i\)</span>th sequence being the start of the binding site is taken to
+be the score of the StruM at that position multiplied by the likelihood
+of the flanking regions matching the background model (<span class="math">\(\phi_B\)</span>):</p>
+<div class="math">
+\[\begin{split}l_{ij} = \prod_{n=1}^{j-1}{P(v_{ij}|\phi_B)} \\
+        \prod_{n=j}^{j+k-1}{P(v_{ij} | \phi_{i-j+1})} \\
+        \prod_{n=j+k}^{N}{P(v_{ij}|\phi_B)}\end{split}\]</div>
+<p>The likelihoods are then normalized on a by-sequence basis to produce
+<span class="math">\(M\)</span>, the matrix of expected start positions:</p>
+<div class="math">
+\[M_{ij} = \frac{l_{ij}}{\sum_{j'=1}^m{l_{ij'}}}\]</div>
+</div>
+<div class="section" id="m-step">
+<h3>M-step<a class="headerlink" href="#m-step" title="Permalink to this headline">¶</a></h3>
+<p>The maximization step takes these likelihoods and calculates maximum
+likelihood values for <span class="math">\(\mu\)</span> and <span class="math">\(\sigma\)</span> for each of the
+<span class="math">\(m\)</span> position-specific features:</p>
+<div class="math">
+\[\mu_j = \sum_{i=1}^n\sum_{\mathrm{v}} {\frac{v_{ij}
+        \cdot M_{ij}}{\sum_{i}\sum_{j}{M_{ij}}}}\]</div>
+<div class="math">
+\[\sigma_j =
+\sum_{i=1}^n\sum_{\mathrm{v}}
+\frac{(v_{ij} - \mu_j)^2 \cdot M_{ij}}
+         {\sum_{i}\sum_{j}{M_{ij}}
+        - \frac{\sum_{i}\sum_{j}{M_{ij}^2}}
+               {\sum_{i}\sum_{j}{M_{ij}}}}\]</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">StruMs: Structural Motifs documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">Installation Instructions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation Instructions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="StruMs: Structural Motifs documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Structural Motifs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Peter DeFord.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

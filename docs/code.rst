@@ -1,0 +1,5 @@
+Documentation
+=============
+
+.. automodule:: strum
+   :members:

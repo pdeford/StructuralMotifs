@@ -1,0 +1,147 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>StruMs: Structural Motifs documentation &#8212; Structural Motifs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction to Structural Motifs" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Structural Motifs"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Structural Motifs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="strums-structural-motifs-documentation">
+<h1>StruMs: Structural Motifs documentation<a class="headerlink" href="#strums-structural-motifs-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Structural Motifs provide a way to represent DNA motifs based on the
+shape of the DNA instead of the DNA sequence. These motifs may represent
+the preferences driving specificity of transcription factors for their
+binding sites. For more information about the underlying model of StruMs,
+refer to <a class="reference internal" href="intro.html"><span class="doc">Introduction to Structural Motifs</span></a>.</p>
+<p>The package described here provides a framework for computing and
+working with StruMs, based on DNA shape features from the <a class="reference external" href="http://diprodb.leibniz-fli.de/">Dinucleotide
+Property DataBase</a>. Currently
+available capabilities include:</p>
+<ul class="simple">
+<li>Train models from known binding sites</li>
+<li>Use expectation maximization to find <em>de novo</em> motifs</li>
+<li>Provide utility to incorporate additional quantitative features,
+e.g. DNase hypersensitivity.</li>
+<li>Score matches of the motif to novel sequences</li>
+</ul>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Structural Motifs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#de-novo-motif-finding"><em>De novo</em> Motif finding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#manual-installation-of-dependencies">Manual Installation of Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-dependencies-with-conda">Installing dependencies with Conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-dependencies-with-pypi">Installing dependencies with PyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-of-strum-package">Installation of StruM Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#de-novo-motif-finding-example"><em>De Novo</em> Motif Finding Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#adding-additional-features">Adding Additional Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Documentation</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="next chapter">Introduction to Structural Motifs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Structural Motifs"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Structural Motifs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Peter DeFord.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>
