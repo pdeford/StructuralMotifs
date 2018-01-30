@@ -57,16 +57,20 @@ representations of DNA sequence motifs. Estimates for DNA structure
 comes from the DiNucleotide Property Database 
 (<a class="reference external" href="http://diprodb.leibniz-fli.de/">http://diprodb.leibniz-fli.de/</a>).</p>
 <dl class="class">
-<dt id="strum.FastStruM">
-<em class="property">class </em><code class="descclassname">strum.</code><code class="descname">FastStruM</code><span class="sig-paren">(</span><em>mode='full'</em>, <em>n_process=1</em>, <em>custom_filter=[]</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Differs from the standard StruM in that it cannot
-incorporate additional features, it requires all 
-sequences to have the same length (or else will 
-filter to the shortest length), and uses heuristics
-to speed up scoring.</p>
+<dt id="strum.StruM">
+<em class="property">class </em><code class="descclassname">strum.</code><code class="descname">StruM</code><span class="sig-paren">(</span><em>mode='full'</em>, <em>n_process=1</em>, <em>custom_filter=[]</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM" title="Permalink to this definition">¶</a></dt>
+<dd><p>StruM Object: Train and work with Structural Motifs</p>
+<p>StruMs can be learned via maximum likelihood (<a class="reference internal" href="#strum.StruM.train" title="strum.StruM.train"><code class="xref py py-func docutils literal"><span class="pre">train()</span></code></a>) from a
+known set of aligned binding sites, or via expectation maximization
+(<a class="reference internal" href="#strum.StruM.train_EM" title="strum.StruM.train_EM"><code class="xref py py-func docutils literal"><span class="pre">train_EM()</span></code></a>) from a set of broader regions.</p>
+<p>For speed, this package will trim the sequences to be the same
+length. This can be user specified, else the shortest sequence 
+will be used as a guide.</p>
+<p>Additional features other than those from DiProDB can be 
+incorporated by using the <a class="reference internal" href="#strum.StruM.update" title="strum.StruM.update"><code class="xref py py-func docutils literal"><span class="pre">update()</span></code></a> method.</p>
 <dl class="method">
-<dt id="strum.FastStruM.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>mode='full'</em>, <em>n_process=1</em>, <em>custom_filter=[]</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>mode='full'</em>, <em>n_process=1</em>, <em>custom_filter=[]</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a FastStruM object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -108,8 +112,8 @@ uses all processers.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.calc_z">
-<code class="descname">calc_z</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.calc_z" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.calc_z">
+<code class="descname">calc_z</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.calc_z" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate Z-scores for values based on mean and standard deviation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -133,8 +137,8 @@ uses all processers.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.define_PWM">
-<code class="descname">define_PWM</code><span class="sig-paren">(</span><em>seqs</em>, <em>weights=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.define_PWM" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.define_PWM">
+<code class="descname">define_PWM</code><span class="sig-paren">(</span><em>seqs</em>, <em>weights=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.define_PWM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes a position weight matrix from sequences used 
 to train the StruM.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -158,16 +162,16 @@ based on the weighted sequences.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.eval">
-<code class="descname">eval</code><span class="sig-paren">(</span><em>struc_kmer</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.eval" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.eval">
+<code class="descname">eval</code><span class="sig-paren">(</span><em>struc_kmer</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compares the structural representation of a sequence 
 to the StruM.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>struc_kmer</strong> (output of <a class="reference internal" href="#strum.FastStruM.translate" title="strum.FastStruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a>.) – A kmer that has been translated to 
-structure-space via <a class="reference internal" href="#strum.FastStruM.translate" title="strum.FastStruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>struc_kmer</strong> (output of <a class="reference internal" href="#strum.StruM.translate" title="strum.StruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a>.) – A kmer that has been translated to 
+structure-space via <a class="reference internal" href="#strum.StruM.translate" title="strum.StruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>log</em> score of similarity of kmer to StruM.</td>
 </tr>
@@ -178,8 +182,37 @@ structure-space via <a class="reference internal" href="#strum.FastStruM.transla
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.norm_p">
-<code class="descname">norm_p</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.norm_p" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.func_translate">
+<code class="descname">func_translate</code><span class="sig-paren">(</span><em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.func_translate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Convert sequence from string to structural representation,</dt>
+<dd>with additional features.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq</strong> (<em>(</em><em>str</em><em>, </em><em>[</em><em>args</em><em>]</em><em>)</em><em></em>) – DNA sequence, all uppercase characters,
+composed of letters from set ACGTN.</li>
+<li><strong>**kwargs</strong> – Additional keyword arguments required
+by <code class="docutils literal"><span class="pre">self.func</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sequence in structural representation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1D numpy array of floats.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="strum.StruM.norm_p">
+<code class="descname">norm_p</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.norm_p" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the one-tail p-value for values from the standard normal 
 distribution. Adds a ‘pseudocount’ of 10e-300 to avoid underflow.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -205,8 +238,8 @@ and <code class="docutils literal"><span class="pre">var</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.print_PWM">
-<code class="descname">print_PWM</code><span class="sig-paren">(</span><em>labels=False</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.print_PWM" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.print_PWM">
+<code class="descname">print_PWM</code><span class="sig-paren">(</span><em>labels=False</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.print_PWM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pretty prints the PWM to std_out.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -228,8 +261,8 @@ the PWM to <code class="docutils literal"><span class="pre">std_out</span></code
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.read_FASTA">
-<code class="descname">read_FASTA</code><span class="sig-paren">(</span><em>fasta_file</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.read_FASTA" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.read_FASTA">
+<code class="descname">read_FASTA</code><span class="sig-paren">(</span><em>fasta_file</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.read_FASTA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a FASTA formatted file for headers and sequences.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -249,8 +282,8 @@ separate lists.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.rev_comp">
-<code class="descname">rev_comp</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.rev_comp" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.rev_comp">
+<code class="descname">rev_comp</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.rev_comp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reverse complement (uppercase) DNA sequence.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -268,8 +301,8 @@ composed of letters from set ACGTN.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.score_seq">
-<code class="descname">score_seq</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.score_seq" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.score_seq">
+<code class="descname">score_seq</code><span class="sig-paren">(</span><em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.score_seq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scores a sequence using pre-calculated StruM.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -288,15 +321,15 @@ in <code class="docutils literal"><span class="pre">seq</span></code> to the Str
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>training_sequences</em>, <em>weights=None</em>, <em>lim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.train" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>training_sequences</em>, <em>weights=None</em>, <em>lim=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Learn structural motif from a set of known binding sites.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>training_sequences</strong> (<em>list of str.</em>) – Training set, composed of gapless 
+<li><strong>training_sequences</strong> (<em>list of str. Or if updated</em><em>, </em><em>list of tuples:</em><em> (</em><em>str</em><em>, </em><em>[</em><em>args</em><em>]</em><em>)</em>) – Training set, composed of gapless 
 alignment of binding sites of equal length.</li>
 <li><strong>weights</strong> (<em>1D array of floats.</em>) – Weights to associate with each of the sequences
 in <code class="docutils literal"><span class="pre">training_sequences</span></code> to use in learning the motif.</li>
@@ -316,8 +349,8 @@ corresponding position weight matrix <code class="docutils literal"><span class=
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.train_EM">
-<code class="descname">train_EM</code><span class="sig-paren">(</span><em>data</em>, <em>fasta=True</em>, <em>params=None</em>, <em>k=10</em>, <em>max_iter=1000</em>, <em>convergence_criterion=0.001</em>, <em>random_seed=0</em>, <em>n_init=1</em>, <em>lim=None</em>, <em>seqlength=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.train_EM" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.train_EM">
+<code class="descname">train_EM</code><span class="sig-paren">(</span><em>data</em>, <em>fasta=True</em>, <em>params=None</em>, <em>k=10</em>, <em>max_iter=1000</em>, <em>convergence_criterion=0.001</em>, <em>random_seed=0</em>, <em>n_init=1</em>, <em>lim=None</em>, <em>seqlength=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.train_EM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs Expectation-Maximization on a set of sequences 
 to find motif.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -365,19 +398,56 @@ corresponding position weight matrix <code class="docutils literal"><span class=
 </dd></dl>
 
 <dl class="method">
-<dt id="strum.FastStruM.translate">
-<code class="descname">translate</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.FastStruM.translate" title="Permalink to this definition">¶</a></dt>
+<dt id="strum.StruM.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert sequence from string to structural representation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seq</strong> (<em>str.</em>) – DNA sequence, all uppercase characters,
-composed of letters from set ACGTN.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq</strong> (<em>str.</em>) – DNA sequence, all uppercase characters,
+composed of letters from set ACGTN.</li>
+<li><strong>**kwargs</strong> – Ignored</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Sequence in structural representation.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sequence in structural representation.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">1D numpy array of floats.</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1D numpy array of floats.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="strum.StruM.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>features</em>, <em>func</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the StruM to incorporate additional features.</p>
+<p>Using this method will change the behavior of other methods,
+especially the <a class="reference internal" href="#strum.StruM.translate" title="strum.StruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a> method is replaced by 
+<a class="reference internal" href="#strum.StruM.func_translate" title="strum.StruM.func_translate"><code class="xref py py-func docutils literal"><span class="pre">func_translate()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>features</strong> (<em>list of str.</em>) – Text description or label of the feature(s)
+being added into the model.</li>
+<li><strong>func</strong> (<em>function.</em>) – The scoring function that produces the additional
+features. These may be computed on sequence alone, or by
+incorporating additional data. The output must be an array
+of shape <code class="docutils literal"><span class="pre">[n,</span> <span class="pre">l-1]</span></code>, where <code class="docutils literal"><span class="pre">n</span></code> is the number of additional 
+features (<code class="docutils literal"><span class="pre">len(features)</span></code>) and <code class="docutils literal"><span class="pre">l</span></code> is the length of the 
+sequence being scored. The first argument of the function must
+be the sequence being scored.</li>
+<li><strong>data</strong> – Additional data that is used by the new function. May
+be a lookup table, for example, or a reference to an outside
+file.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -400,6 +470,17 @@ composed of letters from set ACGTN.</td>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Structural Motifs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#strum-structural-motifs">StruM: Structural Motifs</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="examples.html"
                         title="previous chapter">Examples</a></p>
