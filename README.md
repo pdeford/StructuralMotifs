@@ -18,6 +18,7 @@ For full documentation, refer to the docs [here (html)](docs/_build/html/index.h
 Ensure that you have all of the dependencies, and then run:
 
 ```
+cd strum/
 python setup.py install
 ```
 
