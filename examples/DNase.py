@@ -5,7 +5,7 @@ import numpy as np
 import sys
 
 import bx.bbi.bigwig_file
-import StruM
+from strum import strum
 
 # Specify the path to where you downloaded the bigwig
 # file. E.g. "/Users/user/Downloads/ENCFF111KJD.bigWig"
@@ -14,7 +14,7 @@ DNase_bigwig_path = sys.argv[1]
 # Define the function to be used by the StruM when
 # converting from sequence-space to structural-space.
 # NOTE: This function takes additional parameters.
-def lookup_DNase(data, chrom, start, end):
+def lookup_DNase(seq, data, chrom, start, end):
 	"""Lookup the signal in a bigWig file, convert NaNs to
 	0s, ensure strandedness, and return the modified signal.
 
@@ -40,7 +40,7 @@ def lookup_DNase(data, chrom, start, end):
 	# Ensure strandedness
 	if start > end:
 		trace = trace[::-1]
-	return trace
+	return np.reshape(trace, [1,-1])
 
 # Some example sequences and their chromosome positions, 
 # from human build hg19.
@@ -57,7 +57,9 @@ training_data = [
 ]
 
 # Initialize a new StruM object.
-motif = StruM.StruM()
+motif = strum.StruM(mode='basic')
+
+print motif.features
 
 # Update the StruM to incorporate the function
 # defined above, drawing on the bigWig as the 
@@ -65,9 +67,11 @@ motif = StruM.StruM()
 motif.update(data=DNase_bigwig_path, func=lookup_DNase, 
 	features=['k562_DNase'])
 
+print motif.features
+
 # Train the model using the modified StruM and the example 
 # data above
-motif.train(training_data)
+motif.train(training_data, lim=10.**-5)
 
 # Evaluate the similarity to the model of a new sequence.
 seq = 'GAGGTCCCGGGTTCAATCCCCGGC'
@@ -77,9 +81,9 @@ rseq = motif.rev_comp(seq)
 rposition = [position[0], position[2], position[1]]
 
 s = [
-	motif.score_seq(seq, *position),
-	motif.score_seq(rseq, *rposition)
+	motif.score_seq((seq, position)),
+	motif.score_seq((rseq, rposition))
 ]
 
-strands = ['-', '+']
+strands = ['+', '-']
 print "Best match found on the '{}' strand".format(strands[np.argmax(s)])

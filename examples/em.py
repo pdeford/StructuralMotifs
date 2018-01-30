@@ -36,7 +36,7 @@ training_sequences = [
 # Initialize a new StruM object, using the DNA groove related 
 # features from the DiProDB table. Specify to use 4 cpus
 # when doing EM.
-motif = strum.FastStruM(mode='groove', n_process=4)
+motif = strum.StruM(mode='groove', n_process=4)
 
 # Train the model on the training sequences using expectation
 # maximization, ensuring that that the variation of all 

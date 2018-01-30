@@ -20,7 +20,7 @@ training_sequences = [
 
 # Initialize a new StruM object, using the basic features
 # from the DiProDB table.
-motif = strum.FastStruM(mode='basic')
+motif = strum.StruM(mode='basic')
 
 # Use the training sequences to define the StruM,
 # ensuring that that the variation of all position-specific
