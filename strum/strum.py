@@ -105,7 +105,8 @@ class FastStruM(object):
 		:param mode: Defines which subset of available 
 			features in the DiProDB table to use. Choose from: 
 			['basic', 'protein', 'groove', 'proteingroove', 'unique', 
-			 'full', 'nucs', 'custom']
+			'full', 'nucs', 'custom']
+			
 			* basic -- Twist, Rise, Bend.
 			* protein -- (for DNA-protein complex) Roll, Twist, 
 			  Tilt, Slide, Shift, Rise.

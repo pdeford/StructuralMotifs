@@ -73,10 +73,28 @@ to speed up scoring.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mode</strong> (<em>str.</em>) – Defines which subset of available 
+<li><strong>mode</strong> (<em>str.</em>) – <p>Defines which subset of available 
 features in the DiProDB table to use. Choose from: 
-[‘basic’, ‘groove’, ‘protein’, ‘full’, ‘nucs’, 
-‘unique’, ‘proteingroove’, ‘custom’]</li>
+[‘basic’, ‘protein’, ‘groove’, ‘proteingroove’, ‘unique’, 
+‘full’, ‘nucs’, ‘custom’]</p>
+<ul>
+<li>basic – Twist, Rise, Bend.</li>
+<li>protein – (for DNA-protein complex) Roll, Twist, 
+Tilt, Slide, Shift, Rise.</li>
+<li>groove – Major Groove Width, Major Groove Depth, 
+Major Groove Size, Major Groove Distance, Minor 
+Groove Width, Minor Groove Depth, Minor Groove Size, 
+Minor Groove Distance.</li>
+<li>proteingroove – The union of the “protein” and 
+“groove” filters.</li>
+<li>unique – Filters the table for the first occurrence
+of each type of feature.</li>
+<li>full – All available DNA features.</li>
+<li>nucs – Adenine content, Guanine content, Cytosine 
+content, Thymine content.</li>
+<li>custom – Manually select desired features.</li>
+</ul>
+</li>
 <li><strong>custom_filter</strong> (<em>list of ints.</em>) – Specifies the indices of 
 desired features from the DiProDB table.</li>
 <li><strong>n_process</strong> (<em>int.</em>) – Number of threads to use. <code class="docutils literal"><span class="pre">-1</span></code> 
