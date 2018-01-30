@@ -43,7 +43,7 @@ these sequences. Source code for this example can be found here:
 
     # Initialize a new StruM object, using the basic features
     # from the DiProDB table.
-    motif = strum.FastStruM(mode='basic')
+    motif = strum.StruM(mode='basic')
 
     # Use the training sequences to define the StruM,
     # ensuring that that the variation of all position-specific
@@ -84,7 +84,7 @@ You should see the position weight matrix that would be derived
 from these sequences followed by the strand, position, matching 
 kmer, and score for the best match in the test sequence to the
 StruM. The labels surrounding the PWM can be toggled off by 
-changing the ``labels`` parameter in :func:`strum.FastStruM.print_PWM`. ::
+changing the ``labels`` parameter in :func:`strum.StruM.print_PWM`. ::
 
         1     2     3     4     5     6     7     8     9    10    11
     A 0.000 0.222 0.333 0.444 0.000 0.000 1.000 1.000 1.000 0.000 1.000
@@ -107,7 +107,7 @@ The following example uses the EM capabilities of the StruM package to
 identify the motif GATTACA randomly inserted into 50 sequences. The
 source gode for this example can be downloaded here: `em.py <https://github.com/pdeford/StructuralMotifs/blob/master/examples/em.py>`_. 
 
-Refer to :func:`strum.FastStruM.train_EM` for more info on the parameters for the EM
+Refer to :func:`strum.StruM.train_EM` for more info on the parameters for the EM
 algorithm. ::
 
     #!/usr/bin/env python
@@ -148,7 +148,7 @@ algorithm. ::
     # Initialize a new StruM object, using the DNA groove related 
     # features from the DiProDB table. Specify to use 4 cpus
     # when doing EM.
-    motif = strum.FastStruM(mode='groove', n_process=4)
+    motif = strum.StruM(mode='groove', n_process=4)
 
     # Train the model on the training sequences using expectation
     # maximization, ensuring that that the variation of all 
@@ -232,11 +232,7 @@ In the example below we will define a function that looks up a DNase
 signal from a ``bigwig`` file to incorporate. The file we will be using
 comes from a DNase experiment in K562 cells, mapped to *hg19* from the
 ENCODE project (`ENCFF111KJD <https://www.encodeproject.org/files/ENCFF111KJD/>`_) 
-and can be downloaded from `here <https://www.encodeprojectorg/files/ENCFF111KJD/@@download/ENCFF111KJD.bigWig>`_.
-
-.. warning::
-    Relies on the older version of the StruM (for now)
-    Deprecated with FastStruM (for now)
+and can be downloaded from `here <https://www.encodeproject.org/files/ENCFF111KJD/@@download/ENCFF111KJD.bigWig>`_.
 
 The source code for this example can be found here: `DNase.py <https://github.com/pdeford/StructuralMotifs/blob/master/examples/DNase.py>`_. ::
     
@@ -245,7 +241,7 @@ The source code for this example can be found here: `DNase.py <https://github.co
     import sys
 
     import bx.bbi.bigwig_file
-    import StruM
+    from strum import strum
 
     # Specify the path to where you downloaded the bigwig
     # file. E.g. "/Users/user/Downloads/ENCFF111KJD.bigWig"
@@ -254,7 +250,7 @@ The source code for this example can be found here: `DNase.py <https://github.co
     # Define the function to be used by the StruM when
     # converting from sequence-space to structural-space.
     # NOTE: This function takes additional parameters.
-    def lookup_DNase(data, chrom, start, end):
+    def lookup_DNase(seq, data, chrom, start, end):
         """Lookup the signal in a bigWig file, convert NaNs to
         0s, ensure strandedness, and return the modified signal.
 
@@ -280,7 +276,7 @@ The source code for this example can be found here: `DNase.py <https://github.co
         # Ensure strandedness
         if start > end:
             trace = trace[::-1]
-        return trace
+        return np.reshape(trace, [1,-1])
 
     # Some example sequences and their chromosome positions, 
     # from human build hg19.
@@ -297,7 +293,9 @@ The source code for this example can be found here: `DNase.py <https://github.co
     ]
 
     # Initialize a new StruM object.
-    motif = StruM.StruM()
+    motif = strum.StruM(mode='basic')
+
+    print motif.features
 
     # Update the StruM to incorporate the function
     # defined above, drawing on the bigWig as the 
@@ -305,9 +303,11 @@ The source code for this example can be found here: `DNase.py <https://github.co
     motif.update(data=DNase_bigwig_path, func=lookup_DNase, 
         features=['k562_DNase'])
 
+    print motif.features
+
     # Train the model using the modified StruM and the example 
     # data above
-    motif.train(training_data)
+    motif.train(training_data, lim=10.**-5)
 
     # Evaluate the similarity to the model of a new sequence.
     seq = 'GAGGTCCCGGGTTCAATCCCCGGC'
@@ -317,9 +317,16 @@ The source code for this example can be found here: `DNase.py <https://github.co
     rposition = [position[0], position[2], position[1]]
 
     s = [
-        motif.score_seq(seq, *position),
-        motif.score_seq(rseq, *rposition)
+        motif.score_seq((seq, position)),
+        motif.score_seq((rseq, rposition))
     ]
 
-    strands = ['-', '+']
+    strands = ['+', '-']
     print "Best match found on the '{}' strand".format(strands[np.argmax(s)])
+
+This CTCF site is correctly identified as being in the forward orientation, and there is an additional feature being considered. ::
+
+    ['Twist', 'Rise', 'Bend']
+    ['Twist', 'Rise', 'Bend', 'k562_DNase']
+    Best match found on the '+' strand
+
