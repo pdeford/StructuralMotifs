@@ -169,31 +169,31 @@ algorithm.</p>
 
 <span class="c1"># 50 example sequences that contain the sequence GATTACA</span>
 <span class="n">training_sequences</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;CGATTACAGATCTCCCGCGACCCTT&quot;</span><span class="p">,</span> <span class="s2">&quot;GATGATTACAAGATGCGTCGAATAT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AGCCCTGTCCGCAGATTACAACCAC&quot;</span><span class="p">,</span> <span class="s2">&quot;AGTTAACTCCCTAGATTACATTTGT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CGCTACAAAGTAAAGGAGATTACAT&quot;</span><span class="p">,</span> <span class="s2">&quot;CTGATTACATCCTGTCCGAGGCGTG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CGATTACATTCAACTAGATGCGCGC&quot;</span><span class="p">,</span> <span class="s2">&quot;GAACGGCATGGGCGATTACAACACT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CGGGGTGATCGTAATGTGATTACAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TGGTGCCCTGATTACACCTTACATG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GGCGAAGATTACATCCTCGGCCCAT&quot;</span><span class="p">,</span> <span class="s2">&quot;ATCGGATTACATGTACTCGTCCACG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;TCGGGGATTACAGGGGAGACGCTTA&quot;</span><span class="p">,</span> <span class="s2">&quot;AGGTAGATTACATCGTTTTATTAGT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;TATTGTGCTCGATTACAAGCAGGCC&quot;</span><span class="p">,</span> <span class="s2">&quot;CAGACCGCTTACACGTTGATTACAA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GACACCCTCGATTACACCTCGTATA&quot;</span><span class="p">,</span> <span class="s2">&quot;GGAACCGCGCGGATTACACGCGAGA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GTTGATTACAAGGGAAACATACTTG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCCACACATTAGCTCGAGATTACAT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GCAGAGTACCCTGCGGCGATTACAA&quot;</span><span class="p">,</span> <span class="s2">&quot;ATACTCACGCATACAGATTACAAGA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GGTATGCATCGCGATTACAGCACTG&quot;</span><span class="p">,</span> <span class="s2">&quot;GGATTACAGTGAGCCTGCACCTTGA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;TTGGATTACATGGCCAAACTCCACT&quot;</span><span class="p">,</span> <span class="s2">&quot;GGCCGGCAGAGATTACACTAGAGAG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ACAGATTACAGTGCAAATTGAGCAG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCACTGCATGACTGGATTACAGGCA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CATGCCGGCGGTTAACGGATTACAC&quot;</span><span class="p">,</span> <span class="s2">&quot;CCGATTACAAGTGCTCTGCACGGCG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CATATAGAGGCGATTACAGCGTATC&quot;</span><span class="p">,</span> <span class="s2">&quot;GGAACGATTACAGTGAGACTGCTCC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ATGATTACAGCGAAACGTATTCAAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TTTTCGGATGATTACACATTCTTCT&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GTACAATGCATCGCGATTACAACAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GGATTACAAGTATCTGCCTGGATAC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CTCCCGATTACATCAGGTACGTCCT&quot;</span><span class="p">,</span> <span class="s2">&quot;TAGAGAAGATTACAGCCTACTATTG&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AAGCTTTGGGCCGTACGATTACATC&quot;</span><span class="p">,</span> <span class="s2">&quot;GTAAGATTACAAGTTCAGGGTGATC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;CATGATTACATTGGCGCCGACCTAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GCTGGATTACAATCATACCCGTGTA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GGTTAGGGATTACAAACAAGACGTG&quot;</span><span class="p">,</span> <span class="s2">&quot;GACCGAGGTCTGATTACACTCCATC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ATAGACGCGATTACAAGCACTCTAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TTTCCGTTCTGCAGCTGATTACAAC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;GGATTACACGCCTTCTCAAGCAGTG&quot;</span><span class="p">,</span> <span class="s2">&quot;ATCCTAACAGGATTACAAGAATTAC&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;TATGAAGCTGAAGAAGATTACAGCA&quot;</span><span class="p">,</span> <span class="s2">&quot;CCTGTCTCAGATTACAGCACGGCGG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CGATTACAGATCTCCCGCGACCCTT&quot;</span><span class="p">,</span> <span class="s2">&quot;GATGATTACAAGATGCGTCGAATAT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AGCCCTGTCCGCAGATTACAACCAC&quot;</span><span class="p">,</span> <span class="s2">&quot;AGTTAACTCCCTAGATTACATTTGT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CGCTACAAAGTAAAGGAGATTACAT&quot;</span><span class="p">,</span> <span class="s2">&quot;CTGATTACATCCTGTCCGAGGCGTG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CGATTACATTCAACTAGATGCGCGC&quot;</span><span class="p">,</span> <span class="s2">&quot;GAACGGCATGGGCGATTACAACACT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CGGGGTGATCGTAATGTGATTACAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TGGTGCCCTGATTACACCTTACATG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GGCGAAGATTACATCCTCGGCCCAT&quot;</span><span class="p">,</span> <span class="s2">&quot;ATCGGATTACATGTACTCGTCCACG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TCGGGGATTACAGGGGAGACGCTTA&quot;</span><span class="p">,</span> <span class="s2">&quot;AGGTAGATTACATCGTTTTATTAGT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TATTGTGCTCGATTACAAGCAGGCC&quot;</span><span class="p">,</span> <span class="s2">&quot;CAGACCGCTTACACGTTGATTACAA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GACACCCTCGATTACACCTCGTATA&quot;</span><span class="p">,</span> <span class="s2">&quot;GGAACCGCGCGGATTACACGCGAGA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GTTGATTACAAGGGAAACATACTTG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCCACACATTAGCTCGAGATTACAT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GCAGAGTACCCTGCGGCGATTACAA&quot;</span><span class="p">,</span> <span class="s2">&quot;ATACTCACGCATACAGATTACAAGA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GGTATGCATCGCGATTACAGCACTG&quot;</span><span class="p">,</span> <span class="s2">&quot;GGATTACAGTGAGCCTGCACCTTGA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TTGGATTACATGGCCAAACTCCACT&quot;</span><span class="p">,</span> <span class="s2">&quot;GGCCGGCAGAGATTACACTAGAGAG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ACAGATTACAGTGCAAATTGAGCAG&quot;</span><span class="p">,</span> <span class="s2">&quot;CCACTGCATGACTGGATTACAGGCA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CATGCCGGCGGTTAACGGATTACAC&quot;</span><span class="p">,</span> <span class="s2">&quot;CCGATTACAAGTGCTCTGCACGGCG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CATATAGAGGCGATTACAGCGTATC&quot;</span><span class="p">,</span> <span class="s2">&quot;GGAACGATTACAGTGAGACTGCTCC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ATGATTACAGCGAAACGTATTCAAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TTTTCGGATGATTACACATTCTTCT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GTACAATGCATCGCGATTACAACAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GGATTACAAGTATCTGCCTGGATAC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CTCCCGATTACATCAGGTACGTCCT&quot;</span><span class="p">,</span> <span class="s2">&quot;TAGAGAAGATTACAGCCTACTATTG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AAGCTTTGGGCCGTACGATTACATC&quot;</span><span class="p">,</span> <span class="s2">&quot;GTAAGATTACAAGTTCAGGGTGATC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CATGATTACATTGGCGCCGACCTAC&quot;</span><span class="p">,</span> <span class="s2">&quot;GCTGGATTACAATCATACCCGTGTA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GGTTAGGGATTACAAACAAGACGTG&quot;</span><span class="p">,</span> <span class="s2">&quot;GACCGAGGTCTGATTACACTCCATC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ATAGACGCGATTACAAGCACTCTAA&quot;</span><span class="p">,</span> <span class="s2">&quot;TTTCCGTTCTGCAGCTGATTACAAC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GGATTACACGCCTTCTCAAGCAGTG&quot;</span><span class="p">,</span> <span class="s2">&quot;ATCCTAACAGGATTACAAGAATTAC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TATGAAGCTGAAGAAGATTACAGCA&quot;</span><span class="p">,</span> <span class="s2">&quot;CCTGTCTCAGATTACAGCACGGCGG&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># Initialize a new StruM object, using the DNA groove related</span>
@@ -229,10 +229,10 @@ algorithm.</p>
         <span class="n">i</span> <span class="o">=</span> <span class="n">i2</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
     <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">])</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">{}{: &lt;2}</span><span class="s2"> {: &gt;</span><span class="si">{}</span><span class="s2">} </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">seq</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">,</span>
-                <span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-                <span class="p">)</span>
+    <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">{}{: &lt;2}</span><span class="s2"> {: &gt;</span><span class="si">{}</span><span class="s2">} </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">seq</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">,</span>
+        <span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">)</span>
 
 <span class="c1"># Summarize these best matches with a simple PWM.</span>
 <span class="n">nucs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="s2">&quot;ACGT&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)))</span>
@@ -304,45 +304,45 @@ Deprecated with FastStruM (for now)</p>
 <span class="c1"># converting from sequence-space to structural-space.</span>
 <span class="c1"># NOTE: This function takes additional parameters.</span>
 <span class="k">def</span> <span class="nf">lookup_DNase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Lookup the signal in a bigWig file, convert NaNs to</span>
-<span class="sd">        0s, ensure strandedness, and return the modified signal.</span>
+    <span class="sd">&quot;&quot;&quot;Lookup the signal in a bigWig file, convert NaNs to</span>
+<span class="sd">    0s, ensure strandedness, and return the modified signal.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">                data : (str) - Path to the bigWig file.</span>
-<span class="sd">                chrom : (str) - Chromosome name.</span>
-<span class="sd">                start : (int) - Base pair position on the chromsome of</span>
-<span class="sd">                                                the beginning of the region of interest.</span>
-<span class="sd">                end : (int) - Base pair position on the chromsome of</span>
-<span class="sd">                                          the end of the region of interest.</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        data : (str) - Path to the bigWig file.</span>
+<span class="sd">        chrom : (str) - Chromosome name.</span>
+<span class="sd">        start : (int) - Base pair position on the chromsome of</span>
+<span class="sd">                        the beginning of the region of interest.</span>
+<span class="sd">        end : (int) - Base pair position on the chromsome of</span>
+<span class="sd">                      the end of the region of interest.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">                trace : (1D array) - The signal extracted from the</span>
-<span class="sd">                                                         bigWig file for the region of</span>
-<span class="sd">                                                         interest.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Open file</span>
-        <span class="n">bwh</span> <span class="o">=</span> <span class="n">bx</span><span class="o">.</span><span class="n">bbi</span><span class="o">.</span><span class="n">bigwig_file</span><span class="o">.</span><span class="n">BigWigFile</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-        <span class="c1"># Lookup signal for regions</span>
-        <span class="n">trace</span> <span class="o">=</span> <span class="n">bwh</span><span class="o">.</span><span class="n">get_as_array</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="c1"># Clean up NaNs</span>
-        <span class="n">trace</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">trace</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="c1"># Ensure strandedness</span>
-        <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
-                <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">trace</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        trace : (1D array) - The signal extracted from the</span>
+<span class="sd">                             bigWig file for the region of</span>
+<span class="sd">                             interest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Open file</span>
+    <span class="n">bwh</span> <span class="o">=</span> <span class="n">bx</span><span class="o">.</span><span class="n">bbi</span><span class="o">.</span><span class="n">bigwig_file</span><span class="o">.</span><span class="n">BigWigFile</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="c1"># Lookup signal for regions</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">bwh</span><span class="o">.</span><span class="n">get_as_array</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Clean up NaNs</span>
+    <span class="n">trace</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">trace</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="c1"># Ensure strandedness</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">trace</span>
 
 <span class="c1"># Some example sequences and their chromosome positions,</span>
 <span class="c1"># from human build hg19.</span>
 <span class="n">training_data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">[</span><span class="s1">&#39;GAGATCCTGGGTTCGAATCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">26533165</span><span class="p">,</span> <span class="mi">26533141</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GAGATCCTGGGTTCGAATCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr19&#39;</span><span class="p">,</span> <span class="mi">33667901</span><span class="p">,</span> <span class="mi">33667925</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCGATCCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">28626033</span><span class="p">,</span> <span class="mi">28626009</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GAGGTCCTGGGTTCGATCCCCAGT&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">28763754</span><span class="p">,</span> <span class="mi">28763730</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GGGGGCGTGGGTTCGAATCCCACC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr16&#39;</span><span class="p">,</span> <span class="mi">22308468</span><span class="p">,</span> <span class="mi">22308492</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GGGGGCGTGGGTTCGAATCCCACC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr5&#39;</span><span class="p">,</span> <span class="mi">180614647</span><span class="p">,</span> <span class="mi">180614671</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;AAGGTCCTGGGTTCGAGCCCCAGT&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr11&#39;</span><span class="p">,</span> <span class="mi">59318028</span><span class="p">,</span> <span class="mi">59318004</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCAAATCCCGGA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr1&#39;</span><span class="p">,</span> <span class="mi">167684001</span><span class="p">,</span> <span class="mi">167684025</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCAAATCCCGGA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr7&#39;</span><span class="p">,</span> <span class="mi">128423440</span><span class="p">,</span> <span class="mi">128423464</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGATCCTGGGTTCGAATCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">26533165</span><span class="p">,</span> <span class="mi">26533141</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGATCCTGGGTTCGAATCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr19&#39;</span><span class="p">,</span> <span class="mi">33667901</span><span class="p">,</span> <span class="mi">33667925</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCGATCCCCAGC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">28626033</span><span class="p">,</span> <span class="mi">28626009</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGGTCCTGGGTTCGATCCCCAGT&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr6&#39;</span><span class="p">,</span> <span class="mi">28763754</span><span class="p">,</span> <span class="mi">28763730</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GGGGGCGTGGGTTCGAATCCCACC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr16&#39;</span><span class="p">,</span> <span class="mi">22308468</span><span class="p">,</span> <span class="mi">22308492</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GGGGGCGTGGGTTCGAATCCCACC&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr5&#39;</span><span class="p">,</span> <span class="mi">180614647</span><span class="p">,</span> <span class="mi">180614671</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;AAGGTCCTGGGTTCGAGCCCCAGT&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr11&#39;</span><span class="p">,</span> <span class="mi">59318028</span><span class="p">,</span> <span class="mi">59318004</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCAAATCCCGGA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr1&#39;</span><span class="p">,</span> <span class="mi">167684001</span><span class="p">,</span> <span class="mi">167684025</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s1">&#39;GAGGTCCCGGGTTCAAATCCCGGA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;chr7&#39;</span><span class="p">,</span> <span class="mi">128423440</span><span class="p">,</span> <span class="mi">128423464</span><span class="p">)],</span>
 <span class="p">]</span>
 
 <span class="c1"># Initialize a new StruM object.</span>
@@ -352,7 +352,7 @@ Deprecated with FastStruM (for now)</p>
 <span class="c1"># defined above, drawing on the bigWig as the</span>
 <span class="c1"># data source.</span>
 <span class="n">motif</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">DNase_bigwig_path</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">lookup_DNase</span><span class="p">,</span>
-        <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k562_DNase&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k562_DNase&#39;</span><span class="p">])</span>
 
 <span class="c1"># Train the model using the modified StruM and the example</span>
 <span class="c1"># data above</span>
@@ -366,8 +366,8 @@ Deprecated with FastStruM (for now)</p>
 <span class="n">rposition</span> <span class="o">=</span> <span class="p">[</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">*</span><span class="n">position</span><span class="p">),</span>
-        <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">rseq</span><span class="p">,</span> <span class="o">*</span><span class="n">rposition</span><span class="p">)</span>
+    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">*</span><span class="n">position</span><span class="p">),</span>
+    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">rseq</span><span class="p">,</span> <span class="o">*</span><span class="n">rposition</span><span class="p">)</span>
 <span class="p">]</span>
 
 <span class="n">strands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">]</span>
