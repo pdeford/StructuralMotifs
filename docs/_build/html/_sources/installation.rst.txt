@@ -40,6 +40,9 @@ Installation of StruM Package
 ------------------------------------------------------------------------
 
 To install the StruM package, simply download the source code, navigate
-to that directory, and run::
+to that directory, and run the installation::
 
+	wget "https://github.com/pdeford/StructuralMotifs/archive/master.zip"
+	unzip -q master.zip
+	cd StructuralMotifs-master
 	python setup.py install

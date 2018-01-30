@@ -18,6 +18,9 @@ For full documentation, refer to the docs [here (html)](https://pdeford.github.i
 Ensure that you have all of the dependencies, and then run:
 
 ```
+wget "https://github.com/pdeford/StructuralMotifs/archive/master.zip"
+unzip -q master.zip
+cd StructuralMotifs-master
 python setup.py install
 ```
 
