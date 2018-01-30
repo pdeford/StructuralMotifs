@@ -88,14 +88,19 @@ msg_stop = "Stopped after {} iterations"
 msg_cycle = "Detected cyclical likelihoods. Proceeding to max."
 msg_end = "Did not converge after {} iterations"
 
-class FastStruM(object):
-	"""FastStruM: Learn Strucural Motif, quickly
-	==================================================
-	Differs from the standard StruM in that it cannot
-	incorporate additional features, it requires all 
-	sequences to have the same length (or else will 
-	filter to the shortest length), and uses heuristics
-	to speed up scoring.
+class StruM(object):
+	"""StruM Object: Train and work with Structural Motifs
+	
+	StruMs can be learned via maximum likelihood (:func:`train`) from a
+	known set of aligned binding sites, or via expectation maximization
+	(:func:`train_EM`) from a set of broader regions.
+
+	For speed, this package will trim the sequences to be the same
+	length. This can be user specified, else the shortest sequence 
+	will be used as a guide. 
+
+	Additional features other than those from DiProDB can be 
+	incorporated by using the :func:`update` method.
 	"""
 	
 	def __init__(self, mode="full", n_process=1, 
@@ -106,7 +111,7 @@ class FastStruM(object):
 			features in the DiProDB table to use. Choose from: 
 			['basic', 'protein', 'groove', 'proteingroove', 'unique', 
 			'full', 'nucs', 'custom']
-			
+
 			* basic -- Twist, Rise, Bend.
 			* protein -- (for DNA-protein complex) Roll, Twist, 
 			  Tilt, Slide, Shift, Rise.
@@ -138,10 +143,10 @@ class FastStruM(object):
 		if self.n_process == -1:
 			self.n_process = cpu_count()
 
+
 		# Read the DiProDB data, and filter the matrix based
 		# on the provided mode.
 		data, feat, acid, strand, di_index = read_diprodb()
-		self.features = feat
 		self.index = di_index
 
 		N = data.shape[0]
@@ -170,6 +175,9 @@ class FastStruM(object):
 
 		self.data = data[masks[mode], :]
 		self.p = self.data.shape[0]
+		self.features = []
+		for i in masks[mode]:
+			self.features.append(feat[i])
 
 		# Normalize the DiProDB data
 		mean = np.mean(self.data, axis=1)
@@ -178,6 +186,39 @@ class FastStruM(object):
 
 		# self.mins = np.abs(np.min(self.data, axis=1))
 		# self.scale = np.hstack([mean, sd]).T
+
+		# Initialize attributes for later use
+		self.func = None
+		self.func_data = None
+
+	def update(self, features, func, data=None):
+		"""Update the StruM to incorporate additional features.
+
+		Using this method will change the behavior of other methods,
+		especially the :func:`translate` method is replaced by 
+		:func:`func_translate`.
+
+		:param features: Text description or label of the feature(s)
+			being added into the model.
+		:type features: list of str.
+		:param func: The scoring function that produces the additional
+			features. These may be computed on sequence alone, or by
+			incorporating additional data. The output must be an array
+			of shape ``[n, l-1]``, where ``n`` is the number of additional 
+			features (``len(features)``) and ``l`` is the length of the 
+			sequence being scored. The first argument of the function must
+			be the sequence being scored.
+		:type func: function.
+		:param data: Additional data that is used by the new function. May
+			be a lookup table, for example, or a reference to an outside
+			file.
+		"""
+		self.features = self.features + features
+		self.p += len(features)
+		self.func = func
+		if data is not None:
+			self.func_data = data
+		self.translate = self.func_translate
 
 	def rev_comp(self, seq):
 		"""Reverse complement (uppercase) DNA sequence.
@@ -194,12 +235,13 @@ class FastStruM(object):
 		index['N'] = 'N'
 		return "".join([index[n] for n in seq][::-1])
 
-	def translate(self, seq):
+	def translate(self, seq, **kwargs):
 		"""Convert sequence from string to structural representation.
 
 		:param seq: DNA sequence, all uppercase characters,
 			composed of letters from set ACGTN.
 		:type seq: str.
+		:param \*\*kwargs: Ignored
 		
 		:return: Sequence in structural representation.
 		:rtype: 1D numpy array of floats.
@@ -214,13 +256,39 @@ class FastStruM(object):
 		return np.vstack(row).ravel()
 		# For v_00 v_10 ... v_k0 v_01 ... v_pk
 
+	def func_translate(self, seq, **kwargs):
+		"""Convert sequence from string to structural representation,
+			with additional features.
+
+		:param seq: DNA sequence, all uppercase characters,
+			composed of letters from set ACGTN.
+		:type seq: (str, [args]).
+		:param \*\*kwargs: Additional keyword arguments required
+			by ``self.func``.
+
+		
+		:return: Sequence in structural representation.
+		:rtype: 1D numpy array of floats.
+		"""
+		row = []
+		for i in range(len(seq[0])-1):
+			di = seq[0][i:i+2]
+			if 'N' in di:
+				row.append(np.zeros([self.p,]))
+			else:
+				row.append(self.data[:, self.index[di]])
+		args = seq[1]
+		addition = self.func(seq[0], self.func_data, *args, **kwargs)
+		return np.hstack([np.vstack(row), np.vstack(addition).T]).ravel()
+		# For v_00 v_10 ... v_k0 v_01 ... v_pk
+
 	def train(self, training_sequences, 
-			  weights=None, lim=None):
+			  weights=None, lim=None, **kwargs):
 		"""Learn structural motif from a set of known binding sites.
 
 		:param training_sequences: Training set, composed of gapless 
 			alignment of binding sites of equal length.
-		:type training_sequences: list of str.
+		:type training_sequences: list of str. Or if updated, list of tuples: (str, [args])
 		:param weights: Weights to associate with each of the sequences
 			in ``training_sequences`` to use in learning the motif.
 		:type weights: 1D array of floats.
@@ -234,9 +302,8 @@ class FastStruM(object):
 			corresponding position weight matrix ``self.PWM``.
 		"""
 		data = []
-		self.k = len(training_sequences[0])
 		for example in training_sequences:
-			data.append(self.translate(example))
+			data.append(self.translate(example, **kwargs))
 
 		arr = np.asarray(data)
 		if weights is None:
@@ -246,7 +313,12 @@ class FastStruM(object):
 		self.strum = [average, np.sqrt(variance)]
 		if lim is not None:
 			self.strum[1][self.strum[1] < lim] = lim
+		if self.func is not None:
+			training_sequences = [x[0] for x in training_sequences]
+		self.k = len(training_sequences[0])
 		self.define_PWM(training_sequences, weights=weights)
+		
+
 
 	def calc_z(self, x, mu, var):
 		"""Calculate Z-scores for values based on mean and standard deviation.
@@ -670,7 +742,7 @@ class FastStruM(object):
 
 		self.define_PWM(pwm_seqs)
 
-	def score_seq(self, seq):
+	def score_seq(self, seq, **kwargs):
 		"""Scores a sequence using pre-calculated StruM.
 
 		:param seq: DNA sequence, all uppercase characters,
@@ -681,7 +753,7 @@ class FastStruM(object):
 			in ``seq`` to the StruM.
 		:rtype: 1D array.
 		"""
-		strucseq = self.translate(seq.upper())
+		strucseq = self.translate(seq, **kwargs)
 		n = len(strucseq)
 		kmr_len = self.p*(self.k - 1)
 		kmer_stack = np.vstack([
