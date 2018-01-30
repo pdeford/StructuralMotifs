@@ -1,3 +1,5 @@
+![StruM logo](docs/img/StruM_logo.png)
+
 ## StruM: Structural Motifs
 
 The interaction between sequence specific transcription factors and DNA requires compatability at a complex interface of both electrostatics and 3D structure. These features depend on the sequence context of the motif, with dependence between adjacent nucleotides. 
