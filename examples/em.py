@@ -2,7 +2,7 @@
 
 # Imports
 import numpy as np
-import strum
+from strum import strum
 
 # 50 example sequences that contain the sequence GATTACA
 training_sequences = [

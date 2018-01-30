@@ -2,7 +2,7 @@
 
 # Imports
 import numpy as np
-import strum
+from strum import strum
 
 # Sequences representing some of the variability of the 
 # FOXA1 binding site.
