@@ -19,7 +19,7 @@ possible matches to the binding site.
 
 In this case, a maximum likelihood StruM can be computed directly from
 these sequences. Source code for this example can be found here: 
-`basic.py <#>`_. ::
+`basic.py <https://github.com/pdeford/StructuralMotifs/blob/master/examples/basic.py>`_. ::
 
 	#!/usr/bin/env python
 
@@ -105,7 +105,7 @@ expectation maximization.
 
 The following example uses the EM capabilities of the StruM package to
 identify the motif GATTACA randomly inserted into 50 sequences. The
-source gode for this example can be downloaded here: `em.py <#>`_. 
+source gode for this example can be downloaded here: `em.py <https://github.com/pdeford/StructuralMotifs/blob/master/examples/em.py>`_. 
 
 Refer to :func:`strum.FastStruM.train_EM` for more info on the parameters for the EM
 algorithm. ::
@@ -238,7 +238,7 @@ and can be downloaded from `here <https://www.encodeprojectorg/files/ENCFF111KJD
 	Relies on the older version of the StruM (for now)
 	Deprecated with FastStruM (for now)
 
-The source code for this example can be found here: `DNase.py <#>`_. ::
+The source code for this example can be found here: `DNase.py <https://github.com/pdeford/StructuralMotifs/blob/master/examples/DNase.py>`_. ::
 	
 	# Imports
 	import numpy as np
