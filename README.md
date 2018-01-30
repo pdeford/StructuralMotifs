@@ -9,9 +9,9 @@ StruMs use estimates of DNA shape to model binding sites for sequence specific t
 + Provide utility to [incorporate additional quantitative features](examples/DNase.py), _e.g._ DNase hypersensitivity.
 + [Score matches](examples/basic.py) to novel sequences
 
-For full documentation, refer to [the docs](docs/_build/html/index.html).
+For full documentation, refer to [the docs](https://htmlpreview.github.io/?https://github.com/pdeford/StructuralMotifs/blob/master/docs/_build/html/index.html).
 
-#### Installation
+### Installation
 
 Ensure that you have all of the dependencies, and then run:
 
