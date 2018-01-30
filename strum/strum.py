@@ -104,8 +104,23 @@ class FastStruM(object):
 
 		:param mode: Defines which subset of available 
 			features in the DiProDB table to use. Choose from: 
-			['basic', 'groove', 'protein', 'full', 'nucs', 
-			'unique', 'proteingroove', 'custom']
+			['basic', 'protein', 'groove', 'proteingroove', 'unique', 
+			 'full', 'nucs', 'custom']
+			* basic -- Twist, Rise, Bend.
+			* protein -- (for DNA-protein complex) Roll, Twist, 
+			  Tilt, Slide, Shift, Rise.
+			* groove -- Major Groove Width, Major Groove Depth, 
+			  Major Groove Size, Major Groove Distance, Minor 
+			  Groove Width, Minor Groove Depth, Minor Groove Size, 
+			  Minor Groove Distance.
+			* proteingroove -- The union of the "protein" and 
+			  "groove" filters.
+			* unique -- Filters the table for the first occurrence
+			  of each type of feature.
+			* full -- All available DNA features.
+			* nucs -- Adenine content, Guanine content, Cytosine 
+			  content, Thymine content.
+			* custom -- Manually select desired features.
 		:type mode: str.
 		:param custom_filter: Specifies the indices of 
 			desired features from the DiProDB table.
