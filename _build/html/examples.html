@@ -97,7 +97,7 @@ these sequences. Source code for this example can be found here:
 
 <span class="c1"># Initialize a new StruM object, using the basic features</span>
 <span class="c1"># from the DiProDB table.</span>
-<span class="n">motif</span> <span class="o">=</span> <span class="n">strum</span><span class="o">.</span><span class="n">FastStruM</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">)</span>
+<span class="n">motif</span> <span class="o">=</span> <span class="n">strum</span><span class="o">.</span><span class="n">StruM</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">)</span>
 
 <span class="c1"># Use the training sequences to define the StruM,</span>
 <span class="c1"># ensuring that that the variation of all position-specific</span>
@@ -139,7 +139,7 @@ these sequences. Source code for this example can be found here:
 from these sequences followed by the strand, position, matching
 kmer, and score for the best match in the test sequence to the
 StruM. The labels surrounding the PWM can be toggled off by
-changing the <code class="docutils literal"><span class="pre">labels</span></code> parameter in <a class="reference internal" href="code.html#strum.FastStruM.print_PWM" title="strum.FastStruM.print_PWM"><code class="xref py py-func docutils literal"><span class="pre">strum.FastStruM.print_PWM()</span></code></a>.</p>
+changing the <code class="docutils literal"><span class="pre">labels</span></code> parameter in <a class="reference internal" href="code.html#strum.StruM.print_PWM" title="strum.StruM.print_PWM"><code class="xref py py-func docutils literal"><span class="pre">strum.StruM.print_PWM()</span></code></a>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>     <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>
 <span class="n">A</span> <span class="mf">0.000</span> <span class="mf">0.222</span> <span class="mf">0.333</span> <span class="mf">0.444</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">1.000</span> <span class="mf">1.000</span> <span class="mf">1.000</span> <span class="mf">0.000</span> <span class="mf">1.000</span>
 <span class="n">C</span> <span class="mf">1.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.778</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.889</span> <span class="mf">0.000</span>
@@ -159,7 +159,7 @@ expectation maximization.</p>
 <p>The following example uses the EM capabilities of the StruM package to
 identify the motif GATTACA randomly inserted into 50 sequences. The
 source gode for this example can be downloaded here: <a class="reference external" href="https://github.com/pdeford/StructuralMotifs/blob/master/examples/em.py">em.py</a>.</p>
-<p>Refer to <a class="reference internal" href="code.html#strum.FastStruM.train_EM" title="strum.FastStruM.train_EM"><code class="xref py py-func docutils literal"><span class="pre">strum.FastStruM.train_EM()</span></code></a> for more info on the parameters for the EM
+<p>Refer to <a class="reference internal" href="code.html#strum.StruM.train_EM" title="strum.StruM.train_EM"><code class="xref py py-func docutils literal"><span class="pre">strum.StruM.train_EM()</span></code></a> for more info on the parameters for the EM
 algorithm.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
@@ -199,7 +199,7 @@ algorithm.</p>
 <span class="c1"># Initialize a new StruM object, using the DNA groove related</span>
 <span class="c1"># features from the DiProDB table. Specify to use 4 cpus</span>
 <span class="c1"># when doing EM.</span>
-<span class="n">motif</span> <span class="o">=</span> <span class="n">strum</span><span class="o">.</span><span class="n">FastStruM</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;groove&#39;</span><span class="p">,</span> <span class="n">n_process</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">motif</span> <span class="o">=</span> <span class="n">strum</span><span class="o">.</span><span class="n">StruM</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;groove&#39;</span><span class="p">,</span> <span class="n">n_process</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="c1"># Train the model on the training sequences using expectation</span>
 <span class="c1"># maximization, ensuring that that the variation of all</span>
@@ -282,19 +282,14 @@ binding site.</p>
 signal from a <code class="docutils literal"><span class="pre">bigwig</span></code> file to incorporate. The file we will be using
 comes from a DNase experiment in K562 cells, mapped to <em>hg19</em> from the
 ENCODE project (<a class="reference external" href="https://www.encodeproject.org/files/ENCFF111KJD/">ENCFF111KJD</a>)
-and can be downloaded from <a class="reference external" href="https://www.encodeprojectorg/files/ENCFF111KJD/&#64;&#64;download/ENCFF111KJD.bigWig">here</a>.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Relies on the older version of the StruM (for now)
-Deprecated with FastStruM (for now)</p>
-</div>
+and can be downloaded from <a class="reference external" href="https://www.encodeproject.org/files/ENCFF111KJD/&#64;&#64;download/ENCFF111KJD.bigWig">here</a>.</p>
 <p>The source code for this example can be found here: <a class="reference external" href="https://github.com/pdeford/StructuralMotifs/blob/master/examples/DNase.py">DNase.py</a>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">import</span> <span class="nn">bx.bbi.bigwig_file</span>
-<span class="kn">import</span> <span class="nn">StruM</span>
+<span class="kn">from</span> <span class="nn">strum</span> <span class="k">import</span> <span class="n">strum</span>
 
 <span class="c1"># Specify the path to where you downloaded the bigwig</span>
 <span class="c1"># file. E.g. &quot;/Users/user/Downloads/ENCFF111KJD.bigWig&quot;</span>
@@ -303,7 +298,7 @@ Deprecated with FastStruM (for now)</p>
 <span class="c1"># Define the function to be used by the StruM when</span>
 <span class="c1"># converting from sequence-space to structural-space.</span>
 <span class="c1"># NOTE: This function takes additional parameters.</span>
-<span class="k">def</span> <span class="nf">lookup_DNase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">lookup_DNase</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lookup the signal in a bigWig file, convert NaNs to</span>
 <span class="sd">    0s, ensure strandedness, and return the modified signal.</span>
 
@@ -329,7 +324,7 @@ Deprecated with FastStruM (for now)</p>
     <span class="c1"># Ensure strandedness</span>
     <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
         <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">trace</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># Some example sequences and their chromosome positions,</span>
 <span class="c1"># from human build hg19.</span>
@@ -346,7 +341,9 @@ Deprecated with FastStruM (for now)</p>
 <span class="p">]</span>
 
 <span class="c1"># Initialize a new StruM object.</span>
-<span class="n">motif</span> <span class="o">=</span> <span class="n">StruM</span><span class="o">.</span><span class="n">StruM</span><span class="p">()</span>
+<span class="n">motif</span> <span class="o">=</span> <span class="n">strum</span><span class="o">.</span><span class="n">StruM</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="n">motif</span><span class="o">.</span><span class="n">features</span>
 
 <span class="c1"># Update the StruM to incorporate the function</span>
 <span class="c1"># defined above, drawing on the bigWig as the</span>
@@ -354,9 +351,11 @@ Deprecated with FastStruM (for now)</p>
 <span class="n">motif</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">DNase_bigwig_path</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">lookup_DNase</span><span class="p">,</span>
     <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k562_DNase&#39;</span><span class="p">])</span>
 
+<span class="nb">print</span> <span class="n">motif</span><span class="o">.</span><span class="n">features</span>
+
 <span class="c1"># Train the model using the modified StruM and the example</span>
 <span class="c1"># data above</span>
-<span class="n">motif</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_data</span><span class="p">)</span>
+<span class="n">motif</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span> <span class="n">lim</span><span class="o">=</span><span class="mf">10.</span><span class="o">**-</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># Evaluate the similarity to the model of a new sequence.</span>
 <span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;GAGGTCCCGGGTTCAATCCCCGGC&#39;</span>
@@ -366,12 +365,18 @@ Deprecated with FastStruM (for now)</p>
 <span class="n">rposition</span> <span class="o">=</span> <span class="p">[</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">*</span><span class="n">position</span><span class="p">),</span>
-    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">(</span><span class="n">rseq</span><span class="p">,</span> <span class="o">*</span><span class="n">rposition</span><span class="p">)</span>
+    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">((</span><span class="n">seq</span><span class="p">,</span> <span class="n">position</span><span class="p">)),</span>
+    <span class="n">motif</span><span class="o">.</span><span class="n">score_seq</span><span class="p">((</span><span class="n">rseq</span><span class="p">,</span> <span class="n">rposition</span><span class="p">))</span>
 <span class="p">]</span>
 
-<span class="n">strands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">]</span>
+<span class="n">strands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">]</span>
 <span class="nb">print</span> <span class="s2">&quot;Best match found on the &#39;</span><span class="si">{}</span><span class="s2">&#39; strand&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">strands</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">s</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>This CTCF site is correctly identified as being in the forward orientation, and there is an additional feature being considered.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;Twist&#39;</span><span class="p">,</span> <span class="s1">&#39;Rise&#39;</span><span class="p">,</span> <span class="s1">&#39;Bend&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;Twist&#39;</span><span class="p">,</span> <span class="s1">&#39;Rise&#39;</span><span class="p">,</span> <span class="s1">&#39;Bend&#39;</span><span class="p">,</span> <span class="s1">&#39;k562_DNase&#39;</span><span class="p">]</span>
+<span class="n">Best</span> <span class="n">match</span> <span class="n">found</span> <span class="n">on</span> <span class="n">the</span> <span class="s1">&#39;+&#39;</span> <span class="n">strand</span>
 </pre></div>
 </div>
 </div>
@@ -383,6 +388,19 @@ Deprecated with FastStruM (for now)</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Structural Motifs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#de-novo-motif-finding-example"><em>De Novo</em> Motif Finding Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-additional-features">Adding Additional Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Documentation</a></li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="installation.html"
                         title="previous chapter">Installation Instructions</a></p>
