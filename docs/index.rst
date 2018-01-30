@@ -4,6 +4,7 @@
    contain the root `toctree` directive.
 
 .. image:: img/StruM_logo.png
+	:height: 300px
 
 ========================================================================
 StruMs: Structural Motifs documentation
