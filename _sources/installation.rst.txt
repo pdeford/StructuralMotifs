@@ -30,7 +30,7 @@ Installing dependencies with PyPI
 ------------------------------------------------------------------------
 
 Another method for installing the dependencies manually is using the
-pip command from `PyPI <https://pypi.python.org/pypi>`. Then the
+pip command from `PyPI <https://pypi.python.org/pypi>`_. Then the
 dependencies can be installed with::
 
 	pip install numpy scipy pandas matplotlib bx-python
