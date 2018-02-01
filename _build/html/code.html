@@ -81,23 +81,51 @@ incorporated by using the <a class="reference internal" href="#strum.StruM.updat
 features in the DiProDB table to use. Choose from: 
 [‘basic’, ‘protein’, ‘groove’, ‘proteingroove’, ‘unique’, 
 ‘full’, ‘nucs’, ‘custom’]</p>
-<ul>
-<li>basic – Twist, Rise, Bend.</li>
-<li>protein – (for DNA-protein complex) Roll, Twist, 
-Tilt, Slide, Shift, Rise.</li>
-<li>groove – Major Groove Width, Major Groove Depth, 
-Major Groove Size, Major Groove Distance, Minor 
-Groove Width, Minor Groove Depth, Minor Groove Size, 
-Minor Groove Distance.</li>
-<li>proteingroove – The union of the “protein” and 
-“groove” filters.</li>
-<li>unique – Filters the table for the first occurrence
-of each type of feature.</li>
-<li>full – All available DNA features.</li>
-<li>nucs – Adenine content, Guanine content, Cytosine 
-content, Thymine content.</li>
-<li>custom – Manually select desired features.</li>
-</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">MODE</th>
+<th class="head">Features</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>basic</td>
+<td>Twist, Rise, Bend.</td>
+</tr>
+<tr class="row-odd"><td>protein</td>
+<td>(for DNA-protein complex) Roll, Twist,
+Tilt, Slide, Shift, Rise.</td>
+</tr>
+<tr class="row-even"><td>groove</td>
+<td>Major Groove Width, Major Groove Depth,
+Major Groove Size, Major Groove Distance,
+Minor Groove Width, Minor Groove Depth,
+Minor Groove Size, Minor Groove Distance.</td>
+</tr>
+<tr class="row-odd"><td>proteingroove</td>
+<td>The union of the “protein” and “groove”
+filters.</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>Filters the table for the first
+occurrence of each type of feature.</td>
+</tr>
+<tr class="row-odd"><td>full</td>
+<td>All available double stranded DNA
+features.</td>
+</tr>
+<tr class="row-even"><td>nucs</td>
+<td>Adenine content, Guanine content,
+Cytosine content, Thymine content.</td>
+</tr>
+<tr class="row-odd"><td>custom</td>
+<td>Manually select desired features.</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li><strong>custom_filter</strong> (<em>list of ints.</em>) – Specifies the indices of 
 desired features from the DiProDB table.</li>
