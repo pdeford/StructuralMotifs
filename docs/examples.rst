@@ -324,9 +324,54 @@ The source code for this example can be found here: `DNase.py <https://github.co
     strands = ['+', '-']
     print "Best match found on the '{}' strand".format(strands[np.argmax(s)])
 
-This CTCF site is correctly identified as being in the forward orientation, and there is an additional feature being considered. ::
+This CTCF site is correctly identified as being in the forward 
+orientation, and there is an additional feature being considered. ::
 
     ['Twist', 'Rise', 'Bend']
     ['Twist', 'Rise', 'Bend', 'k562_DNase']
     Best match found on the '+' strand
 
+------------------------------------------------------------------------
+Plotting a graphical representation of the StruM
+------------------------------------------------------------------------
+
+You may find it useful to look at a graphical representation of the
+motif learned using the methods above. This can be accomplished useing
+the :func:`strum.StruM.plot` method. Each of the features included in
+the StruM will be displayed as its own linegraph. The line represents
+the average value of that feature across the site, and the shaded area
+represents +/- 1 standard deviation.
+
+::
+
+    # Imports
+    from strum import strum
+
+    # Sequences representing some of the variability of the 
+    # FOXA1 binding site.
+    training_sequences = [
+        "CTGTGCAAACA",
+        "CTAAGCAAACA",
+        "CTGTGCAAACA",
+        "CTGTGCAAACA",
+        "CAGAGCAAACA",
+        "CTAAGCAAACA",
+        "CTGTGCAAACA",
+        "CAATGTAAACA",
+        "CTGAGTAAATA",
+    ]
+
+    # Train the motif using the 'groove' related features
+    motif = strum.StruM(mode='groove')
+    motif.train(training_sequences, fasta=False)
+
+    # Plot the the StruM, and save to the specified filename
+    motif.plot('FOXA1_strum.png')
+
+This code produces the image below. If you consider the Major Groove 
+Distance, you will notice that there is more variation at the 
+beginning of the motif (to the left) than at the end, as indicated by
+the shaded region. It is also clear to see that FOXA1 prefers a higher
+value at position 6, and a low value at position 9.
+
+.. image:: img/strumplot.png

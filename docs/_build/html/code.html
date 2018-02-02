@@ -355,6 +355,29 @@ and <code class="docutils literal"><span class="pre">var</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="strum.StruM.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>save_path</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a graphical representation of the StruM.</p>
+<p>Generates an image displaying the trends of each of the 
+features in the StruM. The line indicates the average 
+(scaled) value for that feature at each position. Shading
+represents +/- 1 standard devation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This generates one row per feature. If you are including 
+many features, your plot may be excessively tall.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>save_path</strong> (<em>str.</em>) – Filename to use when saving the image.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="strum.StruM.print_PWM">
 <code class="descname">print_PWM</code><span class="sig-paren">(</span><em>labels=False</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.print_PWM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pretty prints the PWM to std_out.</p>
