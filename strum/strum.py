@@ -36,8 +36,12 @@ comes from the DiNucleotide Property Database
 __version__ = '0.1'
 __author__ = 'Peter DeFord'
 
-import os
+import matplotlib as mpl
+mpl.use("Agg")
+
+import matplotlib.pyplot as plt
 from multiprocessing import cpu_count, Pool
+import os
 import sys
 
 import numpy as np
@@ -167,7 +171,7 @@ class StruM(object):
 			"groove"        : [6, 7, 8, 9, 10, 11, 12, 13],
 			"protein"       : [24, 25, 26, 27, 29, 31],
 			"full"          : [i  for i in range(N) if \
-							   (acid[i] == "DNA") and \
+							   ((acid[i] == "DNA") or (acid[i] == "B-DNA")) and \
 							   (strand[i] == "double")],
 			"nucs"          : [78, 79, 80, 81],
 			"unique"        : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -841,6 +845,60 @@ class StruM(object):
 		pretty = "\n".join(rows)
 		print pretty
 		return pretty
+
+	def plot(self, save_path):
+		"""Save a graphical representation of the StruM.
+
+		Generates an image displaying the trends of each of the 
+		features in the StruM. The line indicates the average 
+		(scaled) value for that feature at each position. Shading
+		represents +/- 1 standard devation.
+
+		.. note::
+		   This generates one row per feature. If you are including 
+		   many features, your plot may be excessively tall.
+
+		:param save_path: Filename to use when saving the image.
+		:type save_path: str.
+		"""
+		logo_vals = np.reshape(self.strum[0], [self.k-1, self.p]).T
+		logo_wts  = np.reshape(self.strum[1], [self.k-1, self.p]).T
+		new_names = self.features
+
+		n,m = logo_vals.shape
+		xs = np.asarray(range(1,m+1))
+		colors = ['steelblue']
+		figwidth = 3+(m+1)/3.
+		figheight = 1+(n)*float(figwidth-3)/m
+		
+		plt.figure(figsize=[figwidth,figheight])
+		override = {
+		   'verticalalignment'   : 'center',
+		   'horizontalalignment' : 'right',
+		   'rotation'            : 'horizontal',
+		   #'size'                : 22,
+		   }
+
+		for i in range(n):
+			plt.subplot(n,1,i+1)
+			up = logo_vals[i] + logo_wts[i]
+			dn = logo_vals[i] - logo_wts[i]
+			plt.plot(xs, logo_vals[i], color='black', zorder=10)
+			y1, y2 = plt.ylim()
+			plt.fill_between(xs, up, dn, alpha=0.5, color=colors[i%len(colors)], zorder=1)
+			plt.xticks([])
+			plt.yticks([])
+			plt.xlim([xs[0],xs[-1]])
+			plt.ylim([-3,3])
+			plt.ylabel(new_names[i], **override)
+
+		plt.xticks(range(1,m+1))
+		plt.xlabel("Position")
+
+		plt.tight_layout()
+		plt.subplots_adjust(hspace=0.01)
+		plt.savefig(save_path, dpi=400)
+		plt.close()
 
 def _sorter_key(val):
 	return val[1]
