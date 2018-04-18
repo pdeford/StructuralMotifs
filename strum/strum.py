@@ -349,7 +349,7 @@ class StruM(object):
 		:return: The Z-score for all values in ``x``.
 		:rtype: ``type(x)``
 		"""
-		z = (x-mu)/np.sqrt(var)
+		z = -np.absolute(x-mu)/np.sqrt(var)
 		return z
 
 	def norm_p(self, x, mu, var):
@@ -368,9 +368,10 @@ class StruM(object):
 		:rtype: ``type(x)``
 		"""
 		z = self.calc_z(x, mu, var)
+		print z
 		ps = ndtr(z)
-		m = ps > 0.5
-		ps[m] = 1 - ps[m]
+		# m = ps > 0.5
+		# ps[m] = 1 - ps[m]
 		return ps + 10.**-300
 
 	def read_FASTA(self, fasta_file):
@@ -568,7 +569,7 @@ class StruM(object):
 					try:
 						L_stack = np.product(self.norm_p(
 							kmer_stack, match_motif[0], 
-							match_motif[1])*big_scale,
+							match_motif[1]**2)*big_scale,
 							axis=1)
 					except:
 						print >> err, match_motif[0]
@@ -577,7 +578,7 @@ class StruM(object):
 						print >> err, __, i, seqlength
 						L_stack = np.product(self.norm_p(
 							kmer_stack, match_motif[0], 
-							match_motif[1])*big_scale,
+							match_motif[1]**2)*big_scale,
 							axis=1)
 						quit()
 
@@ -777,8 +778,8 @@ class StruM(object):
 			for i in range(0, n - kmr_len + self.p, self.p)
 			])
 		by_pos = self.norm_p(
-			kmer_stack, self.strum[0], self.strum[1])
-		by_pos = np.log(by_pos)
+			kmer_stack, self.strum[0], self.strum[1]**2)
+		by_pos = np.log10(by_pos)
 		by_kmer = np.sum(by_pos, axis=1)
 		return by_kmer
 
@@ -793,8 +794,8 @@ class StruM(object):
 		:return: *log* score of similarity of kmer to StruM.
 		:rtype: float.
 		"""
-		return np.sum(np.log(10.**-300 + self.norm_p(
-			struc_kmer, self.strum[0], self.strum[1])))
+		return np.sum(np.log10(10.**-300 + self.norm_p(
+			struc_kmer, self.strum[0], self.strum[1]**2)))
 
 	def define_PWM(self, seqs, weights=None):
 		"""Computes a position weight matrix from sequences used 
