@@ -548,7 +548,7 @@ class StruM(object):
 			# has converged.
 			likelihoods = []
 			lastlogL = None
-			latM = None
+			lastM = None
 			cycle = False
 
 			for __ in range(max_iter):
@@ -753,7 +753,7 @@ class StruM(object):
 		pwm_seqs = []
 		for i in range(len(M)):
 			n = np.argmax(M[i])
-			s = sequences_up[i]
+			s = sequences_up[II[i]]
 			pwm_seqs.append(s[n:n+k+1])
 
 		self.define_PWM(pwm_seqs)
