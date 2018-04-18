@@ -368,7 +368,6 @@ class StruM(object):
 		:rtype: ``type(x)``
 		"""
 		z = self.calc_z(x, mu, var)
-		print z
 		ps = ndtr(z)
 		# m = ps > 0.5
 		# ps[m] = 1 - ps[m]
