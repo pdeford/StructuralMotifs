@@ -299,6 +299,31 @@ structure-space via <a class="reference internal" href="#strum.StruM.translate" 
 </dd></dl>
 
 <dl class="method">
+<dt id="strum.StruM.eval_filt">
+<code class="descname">eval_filt</code><span class="sig-paren">(</span><em>struc_kmer</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.eval_filt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A variation on <a class="reference internal" href="#strum.StruM.eval" title="strum.StruM.eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> that masks non-specific features.</p>
+<p>Once the <cite>self.filter_mask</cite> is generated, this method becomes available. 
+This compares the structural representation of a sequence to the 
+StruM.</p>
+<p>Refer to <a class="reference internal" href="#strum.StruM.eval" title="strum.StruM.eval"><code class="xref py py-func docutils literal"><span class="pre">eval()</span></code></a> for more information about the arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="strum.StruM.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update StruM to ignore uninformative position-specific features.</p>
+<p>Features with a high variance, i.e. non-specific features, do not
+contribute to the specificity of the StruM model. Filtering them
+out may increase the signal-to-noise ratio. The position-specific-
+features are rank ordered by their variance, and a univariate 
+spline is fit to the distribution. The point of inflection is 
+used as the threshold for masking less specific features.</p>
+<p>Once this method is run and the attribute <cite>self.filter_mask</cite> is 
+generated, two additional methods will become available:
+<a class="reference internal" href="#strum.StruM.score_seq_filt" title="strum.StruM.score_seq_filt"><code class="xref py py-func docutils literal"><span class="pre">score_seq_filt()</span></code></a> and <a class="reference internal" href="#strum.StruM.eval_filt" title="strum.StruM.eval_filt"><code class="xref py py-func docutils literal"><span class="pre">eval_filt()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="strum.StruM.func_translate">
 <code class="descname">func_translate</code><span class="sig-paren">(</span><em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.func_translate" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
@@ -458,6 +483,16 @@ in <code class="docutils literal"><span class="pre">seq</span></code> to the Str
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="strum.StruM.score_seq_filt">
+<code class="descname">score_seq_filt</code><span class="sig-paren">(</span><em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.score_seq_filt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A variation on <a class="reference internal" href="#strum.StruM.score_seq" title="strum.StruM.score_seq"><code class="xref py py-func docutils literal"><span class="pre">score_seq()</span></code></a> that masks non-specific features.</p>
+<p>Once the <cite>self.filter_mask</cite> is generated, this method becomes available. 
+This scores a sequence with the precomputed StruM, masking non-specific
+features.</p>
+<p>Refer to <a class="reference internal" href="#strum.StruM.score_seq" title="strum.StruM.score_seq"><code class="xref py py-func docutils literal"><span class="pre">score_seq()</span></code></a> for more information about the arguments.</p>
 </dd></dl>
 
 <dl class="method">
