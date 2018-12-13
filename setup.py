@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='StruMs',
-      version='0.1',
+      version='0.2',
       description='Structural Motifs',
       author='Peter DeFord',
       #author_email='pdeford@jhu.edu',
@@ -13,7 +13,6 @@ setup(name='StruMs',
       url='https://github.com/pdeford/strum',
       install_requires=[
           'numpy',
-          'pandas',
           'matplotlib',
           'scipy',
           'bx-python',
