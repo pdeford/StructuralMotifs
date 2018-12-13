@@ -33,7 +33,7 @@ comes from the DiNucleotide Property Database
 
 
 
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Peter DeFord'
 
 import matplotlib as mpl
@@ -235,6 +235,72 @@ class StruM(object):
 		if data is not None:
 			self.func_data = data
 		self.translate = self.func_translate
+
+	def filter(self,):
+		"""Update StruM to ignore uninformative position-specific features.
+
+		Features with a high variance, i.e. non-specific features, do not
+		contribute to the specificity of the StruM model. Filtering them
+		out may increase the signal-to-noise ratio. The position-specific-
+		features are rank ordered by their variance, and a univariate 
+		spline is fit to the distribution. The point of inflection is 
+		used as the threshold for masking less specific features.
+
+		Once this method is run and the attribute `self.filter` is 
+		generated, two additional methods will become available:
+		:func:`score_seq_filt` and :func:`eval_filt`.
+		"""
+		from scipy.interpolate import UnivariateSpline
+		idx = np.argsort(self.strum[1])[::-1]
+		variance = self.strum[1][idx]
+		
+		n = len(idx)
+		xvals = np.arange(n)
+
+		spl = UnivariateSpline(xvals, variance, s=n/10.)
+		d_spl = spl.derivative(1)
+		d_ys = d_spl(xvals)
+
+		min_i = np.argmax(d_ys)
+		self.var_thresh = spl(min_i)
+		self.filter = idx[min_i:]
+
+		def score_seq_filt(self, seq, **kwargs):
+			"""A variation on :func:`score_seq` that masks non-specific features.
+
+			Once the `self.filter` is generated, this method becomes available. 
+			This scores a sequence with the precomputed StruM, masking non-specific
+			features.
+
+			Refer to :func:`score_seq` for more information about the arguments.
+			"""
+			strucseq = self.translate(seq, **kwargs)
+			n = len(strucseq)
+			kmr_len = self.strum.p*(self.strum.k - 1)
+			kmer_stack = np.vstack([
+				strucseq[i:i + kmr_len] \
+				for i in range(0, n - kmr_len + self.strum.p, self.strum.p)
+				])[:, self.filter]
+			by_pos = self.norm_p(
+				kmer_stack, self.strum[0][self.filter], self.strum[1][self.filter]**2)
+			by_pos = np.log10(by_pos)
+			by_kmer = np.sum(by_pos, axis=1)
+			return by_kmer
+
+		def eval_filt(self, struc_kmer):
+			""" A variation on :func:`eval` that masks non-specific features.
+
+			Once the `self.filter` is generated, this method becomes available. 
+			This compares the structural representation of a sequence to the 
+			StruM.
+
+			Refer to :func:`eval` for more information about the arguments.
+			"""
+			return np.sum(np.log10(10.**-300 + self.norm_p(
+				struc_kmer[self.filter], self.strum[0][self.filter], self.strum[1][self.filter]**2)))
+		
+		self.eval_filt = eval_filt
+		self.score_seq_filt = score_seq_filt
 
 	def rev_comp(self, seq):
 		"""Reverse complement (uppercase) DNA sequence.
