@@ -763,12 +763,11 @@ class StruM(object):
 				filtered_seq_data = sequences_data[II]
 
 				match_motif_denom = [
-					np.sum(np.ravel(M)),
-					np.sum(np.square(np.ravel(M)))
+					np.sum(np.ravel(M)+1.0e-300),
+					np.sum(np.square(np.ravel(M)+1.0e-300))
 					]
 				mmd = match_motif_denom
 				mmd[1] = mmd[0] - (mmd[1]/mmd[0])
-				mmd[0][mmd[0] == 0] += 1.0e-300 # Pad values to prevent NaN
 
 
 				## The mean
