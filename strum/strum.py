@@ -768,6 +768,8 @@ class StruM(object):
 					]
 				mmd = match_motif_denom
 				mmd[1] = mmd[0] - (mmd[1]/mmd[0])
+				mmd[0][mmd[0] == 0] += 1.0e-300 # Pad values to prevent NaN
+
 
 				## The mean
 				adjustment = np.zeros([nseqs/2, K*p], 
