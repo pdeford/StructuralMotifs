@@ -614,7 +614,7 @@ class StruM(object):
 			back_avg = np.average(all_pos, axis=0)
 			back_std = np.average(all_pos, axis=0)
 			back_s = self.norm_p(all_pos, back_avg, back_std**2)
-			back_s.reshape(sequences_data.shape)
+			back_s = np.reshape(back_s, sequences_data.shape)
 		else:
 			# Read in a precomputed background model. This should
 			# be a tab delimited file with two columns -- uppercase
@@ -646,7 +646,7 @@ class StruM(object):
 			back_std = np.sqrt(back_std)
 			all_pos = np.reshape(sequences_data, (-1, p))
 			back_s = self.norm_p(all_pos, back_avg, back_std**2)
-			back_s.reshape(sequences_data.shape)
+			back_s = np.reshape(back_s, sequences_data.shape)
 
 
 		# scaler = 10.**(-300./(k*p*seqlength))
