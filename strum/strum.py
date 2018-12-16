@@ -476,7 +476,8 @@ class StruM(object):
 
 	def train_EM(self, data, fasta=True, params=None, k=10,
 		max_iter=1000, convergence_criterion=0.001, 
-		random_seed=0, n_init=1, lim=None, seqlength=None):
+		random_seed=0, n_init=1, lim=None, seqlength=None,
+		background=None, seed_motif=None):
 
 		"""Performs Expectation-Maximization on a set of sequences 
 		to find motif.
@@ -519,12 +520,30 @@ class StruM(object):
 			will be trimmed symmetrically to this length. 
 			.. note:: This must be longer than the shortes sequence.
 		:type seqlength: int.
+		:param background: Method to use for computing the background
+			model. Default is to assume equal probability of each
+			dinucleotide. Passing ``"compute"`` adapts the background
+			model to represent the dinucleotide frequencies in the
+			training sequences. Otherwise this can the path to a tab 
+			delimited file specifying the representation of each 
+			dinucleotide. E.g. ``AA\t0.0625\nAC\t0.0625\n...``
+		:type background: str.
+		:param seed_motif: Optional. A `StruM.strum` to use for 
+			initializing the Expectation-Maximization algorithm.
+			If set, ``k`` will be replaced by the corresponding
+			value from the ``seed_motif``'s shape. ``n_init`` will
+			also be reset to 1.
+		:type seed_motif: ``StruM.strum``.
 
 		:return: None. Defines the structural motif ``self.strum`` and the
 			corresponding position weight matrix ``self.PWM``.
 		"""
 
 		err = sys.stderr
+
+		if seed_motif is not None:
+			k = seed_motif[0] / self.p
+			n_init = 1
 
 		self.k = k + 1
 		K = k
@@ -582,7 +601,54 @@ class StruM(object):
 		# matching to the background.
 		# big_scale = 10.**(-300./(k*p))
 		exp_scale = 1./((seqlength-k)*p)
-		back_s = self.norm_p(sequences_data, 0., 1.) #**exp_scale #* big_scale
+		if background is None:
+			# Assume equal representation of each dinucleotide.
+			# Results in ~N(0, 1) because that was how the
+			# data was normalized
+			back_s = self.norm_p(sequences_data, 0., 1.) #**exp_scale #* big_scale
+		elif background is 'compute':
+			# Use the training sequences to compute the background
+			# model. Allow every position in every sequence to
+			# contribute.
+			all_pos = np.reshape(sequences_data, (-1, p))
+			back_avg = np.average(all_pos, axis=0)
+			back_std = np.average(all_pos, axis=0)
+			back_s = self.norm_p(all_pos, back_avg, back_std**2)
+			back_s.reshape(sequences_data.shape)
+		else:
+			# Read in a precomputed background model. This should
+			# be a tab delimited file with two columns -- uppercase
+			# dinucleotide followed by its representation in the 
+			# organism. E.g.
+			# AA	0.0625
+			# AC	0.0600
+			# AG	0.0650
+			# ...
+			back_avg = np.zeros(p)
+			back_std = np.zeros(p)
+			divals = []
+			props = []
+			with open(background) as backfile:
+				for line in backfile:
+					di, prop = line.split()
+					prop = float(prop)
+					di_val = np.reshape(self.translate(di), (p,))
+					di_vals.append(di_val)
+					props.append(prop)
+			weight_sum = np.sum(props)
+			props = np.array(props)
+			for i,prop in enumerate(props/weight_sum):
+				back_avg += prop*divals[i]
+			nonzero = np.sum(props != 0)
+			weight_sum = (nonzero-1)*np.sum(props)/nonzero
+			for i,prop in enumerate(props/weight_sum):
+				back_std += prop*(divals[i]-back_avg)
+			back_std = np.sqrt(back_std)
+			all_pos = np.reshape(sequences_data, (-1, p))
+			back_s = self.norm_p(all_pos, back_avg, back_std**2)
+			back_s.reshape(sequences_data.shape)
+
+
 		# scaler = 10.**(-300./(k*p*seqlength))
 		n = back_s.shape[1]
 		x = np.product(back_s ** (1./n) , axis=1)
@@ -610,9 +676,12 @@ class StruM(object):
 		# energy landscape.
 		restart_vals = []
 		for i in range(n_init):
-			# Initialize motif, randomly
-			match_motif = [np.random.rand(p*k) - 0.5, 
-						   np.zeros([p*k]) + 0.5]
+			if seed_motif is None:
+				# Initialize motif, randomly
+				match_motif = [np.random.rand(p*k) - 0.5, 
+							   np.zeros([p*k]) + 0.5]
+			else:
+				match_motif = seed_motif
 
 			# Track the likelihoods, so we can determine
 			# if we get caught in a loop. Also track the 
