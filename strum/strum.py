@@ -542,7 +542,7 @@ class StruM(object):
 		err = sys.stderr
 
 		if seed_motif is not None:
-			k = seed_motif[0] / self.p
+			k = int(len(seed_motif[0]) / self.p)
 			n_init = 1
 
 		self.k = k + 1
