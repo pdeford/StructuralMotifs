@@ -526,115 +526,68 @@ corresponding position weight matrix <code class="docutils literal"><span class=
 <dl class="method">
 <dt id="strum.StruM.train_EM">
 <code class="descname">train_EM</code><span class="sig-paren">(</span><em>data</em>, <em>fasta=True</em>, <em>params=None</em>, <em>k=10</em>, <em>max_iter=1000</em>, <em>convergence_criterion=0.001</em>, <em>random_seed=0</em>, <em>n_init=1</em>, <em>lim=None</em>, <em>seqlength=None</em>, <em>background=None</em>, <em>seed_motif=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.train_EM" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Performs Expectation-Maximization on a set of sequences </dt>
-<dd><p class="first">to find motif.</p>
-<table class="last docutils field-list" frame="void" rules="none">
+<dd><p>Performs Expectation-Maximization on a set of sequences 
+to find motif.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param data:</th><td class="field-body">A set of sequences to use for training the model.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list of str</em><em>, </em><em>open file object referring to a 
+FASTA file.</em>) – A set of sequences to use for training the model.
 Assumed to have one occurrence of the binding site per 
-sequence.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type data:</th><td class="field-body">list of str, open file object referring to a 
-FASTA file.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param fasta:</th><td class="field-body">Flag indicating whether <code class="docutils literal"><span class="pre">data</span></code> points to an
+sequence.</li>
+<li><strong>fasta</strong> (<em>bool.</em>) – Flag indicating whether <code class="docutils literal"><span class="pre">data</span></code> points to an
 open file object containing a FASTA formatted file with
-DNA sequences.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type fasta:</th><td class="field-body">bool.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param params:</th><td class="field-body">Additional parameters to pass to <code class="docutils literal"><span class="pre">self.func</span></code>,
-if defined.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type params:</th><td class="field-body"><code class="docutils literal"><span class="pre">*args</span></code>, <code class="docutils literal"><span class="pre">**kwargs</span></code>.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param k:</th><td class="field-body">Size of binding site to consider. Since dinucleotides
+DNA sequences.</li>
+<li><strong>params</strong> (<code class="docutils literal"><span class="pre">*args</span></code>, <code class="docutils literal"><span class="pre">**kwargs</span></code>.) – Additional parameters to pass to <code class="docutils literal"><span class="pre">self.func</span></code>,
+if defined.</li>
+<li><strong>k</strong> (<em>int.</em>) – Size of binding site to consider. Since dinucleotides
 are considered, in sequence-space the size of the binding
-site will be <code class="docutils literal"><span class="pre">k</span> <span class="pre">+</span> <span class="pre">1</span></code>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type k:</th><td class="field-body">int.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param max_iter:</th><td class="field-body">Maximum number of iterations of Expecation
-Maximization to perform if convergence is not attained.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type max_iter:</th><td class="field-body">int.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param convergence_criterion:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">If the change in the likelihood
+site will be <code class="docutils literal"><span class="pre">k</span> <span class="pre">+</span> <span class="pre">1</span></code>.</li>
+<li><strong>max_iter</strong> (<em>int.</em>) – Maximum number of iterations of Expecation
+Maximization to perform if convergence is not attained.</li>
+<li><strong>convergence_criterion</strong> (<em>float.</em>) – If the change in the likelihood
 between two iterations is less than this value, the model
-is considered to have converged.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">type convergence_criterion:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body">float.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param random_seed:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">Seed for the random number generator used
-in the EM algorithm for initialization.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">type random_seed:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body">int.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param n_init:</th><td class="field-body">Number of random restarts of the EM algorithm
-to perform.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type n_init:</th><td class="field-body">int.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param lim:</th><td class="field-body">Minimum value allowed for variation in a given
+is considered to have converged.</li>
+<li><strong>random_seed</strong> (<em>int.</em>) – Seed for the random number generator used
+in the EM algorithm for initialization.</li>
+<li><strong>n_init</strong> (<em>int.</em>) – Number of random restarts of the EM algorithm
+to perform.</li>
+<li><strong>lim</strong> (<em>float</em>) – Minimum value allowed for variation in a given
 position-specific-feature. Useful to prevent <em>any</em>
 deviation at that position from resulting in a probability of
-0.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type lim:</th><td class="field-body">float</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param seqlength:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">If set, the sequences in the training data
+0.</li>
+<li><strong>seqlength</strong> (<em>int.</em>) – If set, the sequences in the training data
 will be trimmed symmetrically to this length. 
-.. note:: This must be longer than the shortes sequence.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type seqlength:</th><td class="field-body">int.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param background:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">Method to use for computing the background
+.. note:: This must be longer than the shortes sequence.</li>
+<li><strong>background</strong> (<em>str.</em>) – <p>Method to use for computing the background
 model. Default is to assume equal probability of each
 dinucleotide. Passing <code class="docutils literal"><span class="pre">&quot;compute&quot;</span></code> adapts the background
 model to represent the dinucleotide frequencies in the
 training sequences. Otherwise this can the path to a tab 
 delimited file specifying the representation of each 
-dinucleotide. E.g. <a href="#id1"><span class="problematic" id="id2">``</span></a>AA 0.0625</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-<p>AC      0.0625
-…``</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">type background:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">str.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">param seed_motif:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body">Optional. A <cite>StruM.strum</cite> to use for 
+dinucleotide. E.g.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AA</span>      <span class="mf">0.0625</span>
+<span class="n">AC</span>      <span class="mf">0.0625</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><strong>seed_motif</strong> (<code class="docutils literal"><span class="pre">StruM.strum</span></code>.) – Optional. A <cite>StruM.strum</cite> to use for 
 initializing the Expectation-Maximization algorithm.
 If set, <code class="docutils literal"><span class="pre">k</span></code> will be replaced by the corresponding
 value from the <code class="docutils literal"><span class="pre">seed_motif</span></code>’s shape. <code class="docutils literal"><span class="pre">n_init</span></code> will
-also be reset to 1.</td>
+also be reset to 1.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">type seed_motif:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><code class="docutils literal"><span class="pre">StruM.strum</span></code>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">None. Defines the structural motif <code class="docutils literal"><span class="pre">self.strum</span></code> and the
-corresponding position weight matrix <code class="docutils literal"><span class="pre">self.PWM</span></code>.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None. Defines the structural motif <code class="docutils literal"><span class="pre">self.strum</span></code> and the
+corresponding position weight matrix <code class="docutils literal"><span class="pre">self.PWM</span></code>.</p>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="method">
