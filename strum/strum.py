@@ -526,7 +526,11 @@ class StruM(object):
 			model to represent the dinucleotide frequencies in the
 			training sequences. Otherwise this can the path to a tab 
 			delimited file specifying the representation of each 
-			dinucleotide. E.g. ``AA\t0.0625\nAC\t0.0625\n...``
+			dinucleotide. E.g.
+			::
+				AA	0.0625
+				AC	0.0625
+				...
 		:type background: str.
 		:param seed_motif: Optional. A `StruM.strum` to use for 
 			initializing the Expectation-Maximization algorithm.
