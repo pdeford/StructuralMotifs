@@ -43,13 +43,7 @@ python setup.py install
 + [scipy](https://www.scipy.org/)
 + [matplotlib](https://matplotlib.org/)
 + [cython](https://cython.org/)
-+ [openmp](https://www.openmp.org)
-
-**With PyPI**
-
-```
-pip install numpy scipy matplotlib cython openmp
-```
++ [openmp](https://www.openmp.org) compatible compiler
 
 **With conda**
 
