@@ -267,7 +267,7 @@ class StruM(object):
             weights = np.ones(arr.shape[0])
         average = np.average(arr, axis=0, weights = weights)
         variance = np.average((arr-average)**2, axis=0, weights = weights)
-        self.strum = [average, variance]
+        self.strum = [average, np.sqrt(variance)]
         if lim is not None:
             self.strum[1][self.strum[1] < lim] = lim
         self.k = len(training_sequences[0])
@@ -353,6 +353,12 @@ class StruM(object):
     @cython.wraparound(False) 
     def score_seq(self, str seq, **kwargs):
         """Scores a sequence using pre-calculated StruM.
+
+        .. note::
+            This only scores the sequence in the given 
+            orientation. If you want to score both strands,
+            use :func:`rev_comp` on `seq`, and run 
+            :func:`score_seq` again.
 
         :param seq: DNA sequence, all uppercase characters,
             composed of letters from set ACGTN.
@@ -790,8 +796,10 @@ class StruM(object):
                     new_std_view[jj] = new_std_view[jj]/mmd2
                     new_std_view[jj] = sqrt(new_std_view[jj])
 
+                new_motif_std = np.sqrt(new_motif_std)
+
                 ### Loosen the distributions that have become too specific.
-                new_motif_std[new_motif_std < sqrt(lim)] = sqrt(lim)
+                new_motif_std[new_motif_std < lim] = lim
 
                 ## Store the values for the next iteration.
                 match_motif_avg = new_motif_avg[:]
@@ -902,15 +910,15 @@ class StruM(object):
         used as the threshold for masking less specific features.
 
         Once this method is run and the attribute `self.filter_mask` is 
-        generated, two additional methods will become available:
-        :func:`score_seq_filt` and :func:`eval_filt`.
+        generated, the method :func:`score_seq_filt` will become 
+        available.
         """
         assert (self.fit == True), \
             "No motif to filter. Must call `train` or `train_EM` first."
 
         from scipy.interpolate import UnivariateSpline
         idx = np.argsort(self.strum[1])[::-1]
-        variance = self.strum[1][idx]
+        variance = (self.strum[1]*self.strum[1])[idx]
         
         n = len(idx)
         xvals = np.arange(n)
