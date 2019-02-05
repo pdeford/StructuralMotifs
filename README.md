@@ -21,26 +21,38 @@ Ensure that you have all of the dependencies, and then run:
 wget "https://github.com/pdeford/StructuralMotifs/archive/master.zip"
 unzip -q master.zip
 cd StructuralMotifs-master
+```
+
+If you only want it installed into your current directory for small scale
+use, use the following command::
+
+```
+python setup.py build_ext --inplace
+```
+
+If you want to install it system wide, use this command instead::
+
+```
+python setup.py build_ext
 python setup.py install
 ```
 
 **Dependencies**
 
 + [numpy](http://www.numpy.org/)
-+ [pandas](https://pandas.pydata.org/)
 + [scipy](https://www.scipy.org/)
 + [matplotlib](https://matplotlib.org/)
-+ [bx-python](https://github.com/bxlab/bx-python)
++ [cython](https://cython.org/)
++ [openmp](https://www.openmp.org)
 
 **With PyPI**
 
 ```
-pip install numpy scipy pandas matplotlib bx-python
+pip install numpy scipy matplotlib cython openmp
 ```
 
 **With conda**
 
 ```
-conda install numpy scipy pandas matplotlib
-conda install -c bioconda bx-python
+conda install numpy scipy matplotlib cython openmp
 ```

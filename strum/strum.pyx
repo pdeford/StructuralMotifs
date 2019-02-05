@@ -218,10 +218,12 @@ class StruM(object):
         self.updated = False
         self.filtered = False
 
+    def __unicode__(self):
+        text_vers = self.text_strum(self.strum[0], self.strum[1], colorbar=True)
+        return u"\n".join(text_vers[::-1])
 
     def __str__(self):
-        text_vers = self.text_strum(self.strum[0], self.strum[1], colorbar=True)
-        return "\n".join(text_vers[::-1])
+        return unicode(self).encode('utf-8')
 
     def __repr__(self):
         main = """{self.__class__.__name__}(mode="{self.mode}", n_process={self.n_process})
@@ -396,7 +398,7 @@ class StruM(object):
         """Reads a FASTA formatted file for headers and sequences.
 
         :param fasta_file: FASTA formatted file containing DNA sequences.
-        :type: file object
+        :type fasta_file: file object.
         
         :return: The headers and sequences from the FASTA file, as two 
             separate lists.
@@ -1035,7 +1037,7 @@ class StruM(object):
         :type avg: Array of floats.
         :param std: The standard deviation values of the StruM to plot.
         :type std: Array of floats.
-        :param avg_range: Eight bins of even width will be generated across
+        :param avg_range: Seven bins of even width will be generated across
             this range, and the ``avg`` values will be assigned to one of the
             bins.
         :type avg_range: tuple ``(low_value, high_value)``.
@@ -1071,7 +1073,8 @@ class StruM(object):
         magenta = u'\x1b[1;35;40m{}\x1b[0m'
         blue = u'\x1b[1;34;40m{}\x1b[0m'
         red = u'\x1b[1;31;40m{}\x1b[0m'
-        colors = [black,white,yellow,green,cyan,magenta,blue,red,]
+        # colors = [black,white,yellow,green,cyan,magenta,blue,red,]
+        colors = [red, magenta, yellow, green, white, cyan, blue]
         
         # Convert values to bins
         if avg_range is None:
@@ -1098,16 +1101,15 @@ class StruM(object):
             strum_str += colors[avg_bins[i]].format(short_ramp[std_bins[i]])
 
         if colorbar:
-            cbar = u'\x1b[1;30;47m{}\x1b[0m'
             avg_str = u"Avg: {:0.2f}".format(avg_range[0])
             for i in range(len(colors)):
                 avg_str += colors[i].format(u'\u2588')
             avg_str += u"{:0.2f}".format(avg_range[1])
             std_str = u"StDev: {:0.2f}".format(std_range[0])
             for i in range(len(colors)):
-                std_str += cbar.format(short_ramp[i])
+                std_str += green.format(short_ramp[i])
             std_str += u"{:0.2f}".format(std_range[1])
-            return (strum_str, avg_str + std_str)
+            return (strum_str, avg_str + u"    " + std_str)
         else:
             return (strum_str,)
 
