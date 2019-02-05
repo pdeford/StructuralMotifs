@@ -102,10 +102,11 @@ likelihood values for :math:`\mu` and :math:`\sigma` for each of the
 
 
 .. math::
-	\sigma_j = 
+	\sigma_j = \sqrt{
 	\sum_{i=1}^n\sum_{\mathrm{v}} 
 	\frac{(v_{ij} - \mu_j)^2 \cdot M_{ij}}
 		 {\sum_{i}\sum_{j}{M_{ij}}
 		- \frac{\sum_{i}\sum_{j}{M_{ij}^2}}
 		       {\sum_{i}\sum_{j}{M_{ij}}}}
+             }
 
