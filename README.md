@@ -39,11 +39,15 @@ python setup.py install
 
 On some linux systems, you may need to edit the `setup.py` file. [Details on why](https://github.com/cocodataset/cocoapi/issues/94#issuecomment-350152998). Change the line that says
 
-```extra_link_args=['-fopenmp'],```
+```
+extra_link_args=['-fopenmp'],
+```
 
 to include `'-L/usr/lib/x86_64-linux-gnu/'`:
 
-```extra_link_args=['-fopenmp', '-L/usr/lib/x86_64-linux-gnu/'],```
+```
+extra_link_args=['-fopenmp', '-L/usr/lib/x86_64-linux-gnu/'],
+```
 
 **Dependencies**
 
@@ -61,4 +65,6 @@ conda install numpy scipy matplotlib cython
 
 If you are using MacOSX, `gcc` lacks the OpenMP specs, and so that needs to be installed separately:
 
-```conda install openmp```
+```
+conda install openmp
+```
