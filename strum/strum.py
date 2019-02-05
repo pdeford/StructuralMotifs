@@ -616,7 +616,7 @@ class StruM(object):
 			# contribute.
 			all_pos = np.reshape(sequences_data, (-1, p))
 			back_avg = np.average(all_pos, axis=0)
-			back_std = np.average(all_pos, axis=0)
+			back_std = np.std(all_pos, axis=0)
 			back_s = self.norm_p(all_pos, back_avg, back_std**2)
 			back_s = np.reshape(back_s, sequences_data.shape)
 		else:
@@ -637,7 +637,7 @@ class StruM(object):
 					di, prop = line.split()
 					prop = float(prop)
 					di_val = np.reshape(self.translate(di), (p,))
-					di_vals.append(di_val)
+					divals.append(di_val)
 					props.append(prop)
 			weight_sum = np.sum(props)
 			props = np.array(props)
