@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation Instructions &mdash; Structural Motifs 0.2 documentation</title>
+  <title>Installation Instructions &mdash; Structural Motifs 0.3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Structural Motifs 0.2 documentation" href="index.html"/>
+    <link rel="top" title="Structural Motifs 0.3 documentation" href="index.html"/>
         <link rel="next" title="Examples" href="examples.html"/>
         <link rel="prev" title="Introduction to Structural Motifs" href="intro.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -148,10 +148,10 @@
 <p>The StruM package depends on the following libraries:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://www.numpy.org/">numpy</a></li>
-<li><a class="reference external" href="https://pandas.pydata.org/">pandas</a></li>
 <li><a class="reference external" href="https://www.scipy.org/">scipy</a></li>
 <li><a class="reference external" href="https://matplotlib.org/">matplotlib</a></li>
-<li><a class="reference external" href="https://github.com/bxlab/bx-python">bx-python</a></li>
+<li><a class="reference external" href="https://cython.org/">cython</a></li>
+<li><a class="reference external" href="https://www.openmp.org">openmp</a></li>
 </ul>
 </div>
 <div class="section" id="installing-dependencies-with-conda">
@@ -159,8 +159,7 @@
 <p>By far the easiest way to install all of the dependencies is with
 <a class="reference external" href="https://conda.io/docs/">conda</a>. With conda installed, the
 dependencies can be installed with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">matplotlib</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">bioconda</span> <span class="n">bx</span><span class="o">-</span><span class="n">python</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">matplotlib</span> <span class="n">cython</span> <span class="n">openmp</span>
 </pre></div>
 </div>
 </div>
@@ -169,7 +168,7 @@ dependencies can be installed with:</p>
 <p>Another method for installing the dependencies manually is using the
 pip command from <a class="reference external" href="https://pypi.python.org/pypi">PyPI</a>. Then the
 dependencies can be installed with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">matplotlib</span> <span class="n">bx</span><span class="o">-</span><span class="n">python</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">matplotlib</span> <span class="n">cython</span> <span class="n">openmp</span>
 </pre></div>
 </div>
 </div>
@@ -180,6 +179,15 @@ to that directory, and run the installation:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="s2">&quot;https://github.com/pdeford/StructuralMotifs/archive/master.zip&quot;</span>
 <span class="n">unzip</span> <span class="o">-</span><span class="n">q</span> <span class="n">master</span><span class="o">.</span><span class="n">zip</span>
 <span class="n">cd</span> <span class="n">StructuralMotifs</span><span class="o">-</span><span class="n">master</span>
+</pre></div>
+</div>
+<p>If you only want it installed into your current directory for small scale
+use, use the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span> <span class="o">--</span><span class="n">inplace</span>
+</pre></div>
+</div>
+<p>If you want to install it system wide, use this command instead:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_ext</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
@@ -205,7 +213,7 @@ to that directory, and run the installation:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Peter DeFord.
+        &copy; Copyright 2019, Peter DeFord.
 
     </p>
   </div>
@@ -227,7 +235,7 @@ to that directory, and run the installation:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.2',
+            VERSION:'0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Examples &mdash; Structural Motifs 0.2 documentation</title>
+  <title>Examples &mdash; Structural Motifs 0.3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Structural Motifs 0.2 documentation" href="index.html"/>
+    <link rel="top" title="Structural Motifs 0.3 documentation" href="index.html"/>
         <link rel="next" title="Documentation" href="code.html"/>
         <link rel="prev" title="Installation Instructions" href="installation.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -229,7 +229,7 @@ these sequences. Source code for this example can be found here:
 from these sequences followed by the strand, position, matching
 kmer, and score for the best match in the test sequence to the
 StruM. The labels surrounding the PWM can be toggled off by
-changing the <code class="docutils literal"><span class="pre">labels</span></code> parameter in <a class="reference internal" href="code.html#strum.StruM.print_PWM" title="strum.StruM.print_PWM"><code class="xref py py-func docutils literal"><span class="pre">strum.StruM.print_PWM()</span></code></a>.</p>
+changing the <code class="docutils literal"><span class="pre">labels</span></code> parameter in <code class="xref py py-func docutils literal"><span class="pre">strum.StruM.print_PWM()</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="mi">1</span>     <span class="mi">2</span>     <span class="mi">3</span>     <span class="mi">4</span>     <span class="mi">5</span>     <span class="mi">6</span>     <span class="mi">7</span>     <span class="mi">8</span>     <span class="mi">9</span>    <span class="mi">10</span>    <span class="mi">11</span>
 <span class="n">A</span> <span class="mf">0.000</span> <span class="mf">0.222</span> <span class="mf">0.333</span> <span class="mf">0.444</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">1.000</span> <span class="mf">1.000</span> <span class="mf">1.000</span> <span class="mf">0.000</span> <span class="mf">1.000</span>
 <span class="n">C</span> <span class="mf">1.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.778</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.000</span> <span class="mf">0.889</span> <span class="mf">0.000</span>
@@ -249,7 +249,7 @@ expectation maximization.</p>
 <p>The following example uses the EM capabilities of the StruM package to
 identify the motif GATTACA randomly inserted into 50 sequences. The
 source gode for this example can be downloaded here: <a class="reference external" href="https://github.com/pdeford/StructuralMotifs/blob/master/examples/em.py">em.py</a>.</p>
-<p>Refer to <a class="reference internal" href="code.html#strum.StruM.train_EM" title="strum.StruM.train_EM"><code class="xref py py-func docutils literal"><span class="pre">strum.StruM.train_EM()</span></code></a> for more info on the parameters for the EM
+<p>Refer to <code class="xref py py-func docutils literal"><span class="pre">strum.StruM.train_EM()</span></code> for more info on the parameters for the EM
 algorithm.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
@@ -475,7 +475,7 @@ orientation, and there is an additional feature being considered.</p>
 <h2><a class="toc-backref" href="#id5">Plotting a graphical representation of the StruM</a><a class="headerlink" href="#plotting-a-graphical-representation-of-the-strum" title="Permalink to this headline">¶</a></h2>
 <p>You may find it useful to look at a graphical representation of the
 motif learned using the methods above. This can be accomplished useing
-the <a class="reference internal" href="code.html#strum.StruM.plot" title="strum.StruM.plot"><code class="xref py py-func docutils literal"><span class="pre">strum.StruM.plot()</span></code></a> method. Each of the features included in
+the <code class="xref py py-func docutils literal"><span class="pre">strum.StruM.plot()</span></code> method. Each of the features included in
 the StruM will be displayed as its own linegraph. The line represents
 the average value of that feature across the site, and the shaded area
 represents +/- 1 standard deviation.</p>
@@ -532,7 +532,7 @@ value at position 6, and a low value at position 9.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Peter DeFord.
+        &copy; Copyright 2019, Peter DeFord.
 
     </p>
   </div>
@@ -554,7 +554,7 @@ value at position 6, and a low value at position 9.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.2',
+            VERSION:'0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
