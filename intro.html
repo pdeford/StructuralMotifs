@@ -215,12 +215,13 @@ likelihood values for <span class="math">\(\mu\)</span> and <span class="math">\
 \[\mu_j = \sum_{i=1}^n\sum_{\mathrm{v}} {\frac{v_{ij}
         \cdot M_{ij}}{\sum_{i}\sum_{j}{M_{ij}}}}\]</div>
 <div class="math">
-\[\sigma_j =
+\[\sigma_j = \sqrt{
 \sum_{i=1}^n\sum_{\mathrm{v}}
 \frac{(v_{ij} - \mu_j)^2 \cdot M_{ij}}
          {\sum_{i}\sum_{j}{M_{ij}}
         - \frac{\sum_{i}\sum_{j}{M_{ij}^2}}
-               {\sum_{i}\sum_{j}{M_{ij}}}}\]</div>
+               {\sum_{i}\sum_{j}{M_{ij}}}}
+     }\]</div>
 </div>
 </div>
 </div>
