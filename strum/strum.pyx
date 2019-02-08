@@ -358,7 +358,7 @@ class StruM(object):
             the PWM to ``std_out``.
         :rtype: str.
         """
-        assert (self.fit == True), "No PWM to print. Must call `train` or `train_EM` first."
+        assert (self.fit is True), "No PWM to print. Must call `train` or `train_EM` first."
         nuc_index = dict(zip("ACGT", range(4)))
         rows = [ " ".join(["%0.3f" % x for x in row]) for row in self.PWM ]
         if labels:
@@ -391,7 +391,7 @@ class StruM(object):
             in ``seq`` to the StruM.
         :rtype: 1D array.
         """
-        assert (self.fit == True), \
+        assert (self.fit is True), \
             "No StruM to score with. Must call `train` or `train_EM` first."
         cdef double val, val2
         cdef Py_ssize_t i, n_kmers, kmr_len, j, kmer_i
@@ -913,7 +913,7 @@ class StruM(object):
         :return: Sequence in structural representation.
         :rtype: 1D numpy array of floats.
         """
-        assert (self.updated == True), \
+        assert (self.updated is True), \
             "Must call ``StruM.update`` first"
         row = []
         for i in range(len(f_seq[0])-1):
@@ -940,7 +940,7 @@ class StruM(object):
         generated, the method :func:`score_seq_filt` will become 
         available.
         """
-        assert (self.fit == True), \
+        assert (self.fit is True), \
             "No motif to filter. Must call `train` or `train_EM` first."
 
         from scipy.interpolate import UnivariateSpline
@@ -970,9 +970,9 @@ class StruM(object):
 
         Refer to :func:`score_seq` for more information about the arguments.
         """
-        assert (self.fit == True), \
+        assert (self.fit is True), \
             "No StruM to score with. Must call `train` or `train_EM` first."
-        assert (self.filtered == True), \
+        assert (self.filtered is True), \
             "Must call ``StruM.filter()`` before using ``score_seq_filt``."
 
         
