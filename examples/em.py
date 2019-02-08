@@ -52,7 +52,7 @@ motif.train_EM(training_sequences, fasta=False, k=k,
 out = []
 
 for sequence in training_sequences:
-    rseq = motif.rev_comp(sequence)
+    rseq = strum.rev_comp(sequence)
     s1 = motif.score_seq(sequence)
     s2 = motif.score_seq(rseq)
     i1 = np.argmax(s1)

@@ -34,7 +34,7 @@ motif.print_PWM(True)
 test_sequence = "ACGTACTGCAGAGCAAACAACTGATCGGATC"
 # Reverse complement it, as the best match may not be on
 # the forward strand.
-reversed_test = motif.rev_comp(test_sequence)
+reversed_test = strum.rev_comp(test_sequence)
 
 # Get a score of the similarity for each kmer in the test 
 # sequence to the StruM.

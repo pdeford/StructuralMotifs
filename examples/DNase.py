@@ -71,13 +71,13 @@ print motif.features
 
 # Train the model using the modified StruM and the example 
 # data above
-motif.train(training_data, lim=10.**-5)
+motif.train(training_data, lim=1.e-1)
 
 # Evaluate the similarity to the model of a new sequence.
 seq = 'GAGGTCCCGGGTTCAATCCCCGGC'
 position = ['chr2', 157257305, 157257329]
 
-rseq = motif.rev_comp(seq)
+rseq = strum.rev_comp(seq)
 rposition = [position[0], position[2], position[1]]
 
 s = [
