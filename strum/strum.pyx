@@ -261,7 +261,6 @@ class StruM(object):
         data = []
         for example in training_sequences:
             data.append(self.translate(example, **kwargs))
-
         arr = np.asarray(data)
         if weights is None:
             weights = np.ones(arr.shape[0])
@@ -270,11 +269,33 @@ class StruM(object):
         self.strum = [average, np.sqrt(variance)]
         if lim is not None:
             self.strum[1][self.strum[1] < lim] = lim
+        if type(training_sequences[0]) is not str:
+            training_sequences = [x[0] for x in training_sequences]
         self.k = len(training_sequences[0])
         self.define_PWM(training_sequences, weights=weights)
         self.fit = True
 
-    def translate(self, str seq, **kwargs):
+    def translate(self, seq, **kwargs):
+        """Convert sequence from string to structural representation.
+
+        Based on the value of `self.updated` will either call the
+        :func:`translate_base` function to use just the DiProDB values,
+        or the :func:`translate_func` to augment those with additional
+        values.
+
+        :param seq: Necessary data for the sequence to be translated. See
+            :func:`translate_base` and :func:`translate_func` for more 
+            information.
+        
+        :return: Sequence in structural representation.
+        :rtype: 1D numpy array of floats.
+        """
+        if self.updated:
+            return self.translate_func(seq, **kwargs)
+        else:
+            return self.translate_base(seq, **kwargs)
+
+    def translate_base(self, str seq, **kwargs):
         """Convert sequence from string to structural representation.
 
         :param seq: DNA sequence, all uppercase characters,
@@ -351,7 +372,7 @@ class StruM(object):
 
     @cython.boundscheck(False)
     @cython.wraparound(False) 
-    def score_seq(self, str seq, **kwargs):
+    def score_seq(self, seq, **kwargs):
         """Scores a sequence using pre-calculated StruM.
 
         .. note::
@@ -361,7 +382,9 @@ class StruM(object):
             :func:`score_seq` again.
 
         :param seq: DNA sequence, all uppercase characters,
-            composed of letters from set ACGTN.
+            composed of letters from set ACGTN. Follows format of the 
+            appropriate translate function: (:func:`translate_base`,
+            :func:`translate_func`)
         :type seq: str.
 
         :return: Vector of scores for similarity of each kmer
@@ -383,7 +406,10 @@ class StruM(object):
         strucseq = self.translate(seq, **kwargs)
         cdef double [:] strucseq_view = strucseq
         
-        n_kmers = len(seq) - k + 1
+        if self.updated:
+            n_kmers = len(seq[0]) - k + 1
+        else:
+            n_kmers = len(seq) - k + 1
         kmr_len = p*(k-1)
         
         by_kmer = np.zeros((n_kmers), dtype=np.double)
@@ -847,7 +873,7 @@ class StruM(object):
 
         Using this method will change the behavior of other methods,
         especially the :func:`translate` method is replaced by 
-        :func:`func_translate`.
+        :func:`translate_func`.
 
         :param features: Text description or label of the feature(s)
             being added into the model.
@@ -869,15 +895,16 @@ class StruM(object):
         self.func = func
         if data is not None:
             self.func_data = data
-        self.translate = self.func_translate
+        self.translate = self.translate_func
         self.updated = True
 
-    def func_translate(self, seq, **kwargs):
+    def translate_func(self, f_seq, **kwargs):
         """Convert sequence from string to structural representation,
             with additional features.
 
         :param seq: DNA sequence, all uppercase characters,
-            composed of letters from set ACGTN.
+            composed of letters from set ACGTN, with additional data
+            for passing to the extra function, if necessary.
         :type seq: (str, [args]).
         :param \*\*kwargs: Additional keyword arguments required
             by ``self.func``.
@@ -889,14 +916,14 @@ class StruM(object):
         assert (self.updated == True), \
             "Must call ``StruM.update`` first"
         row = []
-        for i in range(len(seq[0])-1):
-            di = seq[0][i:i+2]
+        for i in range(len(f_seq[0])-1):
+            di = f_seq[0][i:i+2]
             if 'N' in di:
                 row.append(np.zeros([self.p,]))
             else:
                 row.append(self.data[:, self.index[di]])
-        args = seq[1]
-        addition = self.func(seq[0], self.func_data, *args, **kwargs)
+        args = f_seq[1]
+        addition = self.func(f_seq[0], self.func_data, *args, **kwargs)
         return np.hstack([np.vstack(row), np.vstack(addition).T]).ravel()
 
     def filter(self,):
