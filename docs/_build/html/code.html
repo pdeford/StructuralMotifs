@@ -281,37 +281,8 @@ features are rank ordered by their variance, and a univariate
 spline is fit to the distribution. The point of inflection is 
 used as the threshold for masking less specific features.</p>
 <p>Once this method is run and the attribute <cite>self.filter_mask</cite> is 
-generated, two additional methods will become available:
-<a class="reference internal" href="#strum.StruM.score_seq_filt" title="strum.StruM.score_seq_filt"><code class="xref py py-func docutils literal"><span class="pre">score_seq_filt()</span></code></a> and <code class="xref py py-func docutils literal"><span class="pre">eval_filt()</span></code>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="strum.StruM.func_translate">
-<code class="descname">func_translate</code><span class="sig-paren">(</span><em>self</em>, <em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.func_translate" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Convert sequence from string to structural representation,</dt>
-<dd>with additional features.</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>seq</strong> (<em>(</em><em>str</em><em>, </em><em>[</em><em>args</em><em>]</em><em>)</em><em></em>) – DNA sequence, all uppercase characters,
-composed of letters from set ACGTN.</li>
-<li><strong>**kwargs</strong> – Additional keyword arguments required
-by <code class="docutils literal"><span class="pre">self.func</span></code>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sequence in structural representation.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1D numpy array of floats.</p>
-</td>
-</tr>
-</tbody>
-</table>
+generated, the method <a class="reference internal" href="#strum.StruM.score_seq_filt" title="strum.StruM.score_seq_filt"><code class="xref py py-func docutils literal"><span class="pre">score_seq_filt()</span></code></a> will become 
+available.</p>
 </dd></dl>
 
 <dl class="method">
@@ -381,14 +352,23 @@ separate lists.</td>
 
 <dl class="method">
 <dt id="strum.StruM.score_seq">
-<code class="descname">score_seq</code><span class="sig-paren">(</span><em>self</em>, <em>str seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.score_seq" title="Permalink to this definition">¶</a></dt>
+<code class="descname">score_seq</code><span class="sig-paren">(</span><em>self</em>, <em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.score_seq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scores a sequence using pre-calculated StruM.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This only scores the sequence in the given 
+orientation. If you want to score both strands,
+use <a class="reference internal" href="#strum.rev_comp" title="strum.rev_comp"><code class="xref py py-func docutils literal"><span class="pre">rev_comp()</span></code></a> on <cite>seq</cite>, and run 
+<a class="reference internal" href="#strum.StruM.score_seq" title="strum.StruM.score_seq"><code class="xref py py-func docutils literal"><span class="pre">score_seq()</span></code></a> again.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seq</strong> (<em>str.</em>) – DNA sequence, all uppercase characters,
-composed of letters from set ACGTN.</td>
+composed of letters from set ACGTN. Follows format of the 
+appropriate translate function: (<a class="reference internal" href="#strum.StruM.translate_base" title="strum.StruM.translate_base"><code class="xref py py-func docutils literal"><span class="pre">translate_base()</span></code></a>,
+<a class="reference internal" href="#strum.StruM.translate_func" title="strum.StruM.translate_func"><code class="xref py py-func docutils literal"><span class="pre">translate_func()</span></code></a>)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of scores for similarity of each kmer
 in <code class="docutils literal"><span class="pre">seq</span></code> to the StruM.</td>
@@ -543,7 +523,31 @@ corresponding position weight matrix <code class="docutils literal"><span class=
 
 <dl class="method">
 <dt id="strum.StruM.translate">
-<code class="descname">translate</code><span class="sig-paren">(</span><em>self</em>, <em>str seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.translate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">translate</code><span class="sig-paren">(</span><em>self</em>, <em>seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sequence from string to structural representation.</p>
+<p>Based on the value of <cite>self.updated</cite> will either call the
+<a class="reference internal" href="#strum.StruM.translate_base" title="strum.StruM.translate_base"><code class="xref py py-func docutils literal"><span class="pre">translate_base()</span></code></a> function to use just the DiProDB values,
+or the <a class="reference internal" href="#strum.StruM.translate_func" title="strum.StruM.translate_func"><code class="xref py py-func docutils literal"><span class="pre">translate_func()</span></code></a> to augment those with additional
+values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seq</strong> – Necessary data for the sequence to be translated. See
+<a class="reference internal" href="#strum.StruM.translate_base" title="strum.StruM.translate_base"><code class="xref py py-func docutils literal"><span class="pre">translate_base()</span></code></a> and <a class="reference internal" href="#strum.StruM.translate_func" title="strum.StruM.translate_func"><code class="xref py py-func docutils literal"><span class="pre">translate_func()</span></code></a> for more 
+information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Sequence in structural representation.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">1D numpy array of floats.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="strum.StruM.translate_base">
+<code class="descname">translate_base</code><span class="sig-paren">(</span><em>self</em>, <em>str seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.translate_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert sequence from string to structural representation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -567,12 +571,39 @@ composed of letters from set ACGTN.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="strum.StruM.translate_func">
+<code class="descname">translate_func</code><span class="sig-paren">(</span><em>self</em>, <em>f_seq</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.translate_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sequence from string to structural representation,             with additional features.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq</strong> (<em>(</em><em>str</em><em>, </em><em>[</em><em>args</em><em>]</em><em>)</em><em></em>) – DNA sequence, all uppercase characters,
+composed of letters from set ACGTN, with additional data
+for passing to the extra function, if necessary.</li>
+<li><strong>**kwargs</strong> – Additional keyword arguments required
+by <code class="docutils literal"><span class="pre">self.func</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sequence in structural representation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1D numpy array of floats.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="strum.StruM.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>self</em>, <em>features</em>, <em>func</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strum.StruM.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the StruM to incorporate additional features.</p>
 <p>Using this method will change the behavior of other methods,
 especially the <a class="reference internal" href="#strum.StruM.translate" title="strum.StruM.translate"><code class="xref py py-func docutils literal"><span class="pre">translate()</span></code></a> method is replaced by 
-<a class="reference internal" href="#strum.StruM.func_translate" title="strum.StruM.func_translate"><code class="xref py py-func docutils literal"><span class="pre">func_translate()</span></code></a>.</p>
+<a class="reference internal" href="#strum.StruM.translate_func" title="strum.StruM.translate_func"><code class="xref py py-func docutils literal"><span class="pre">translate_func()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
