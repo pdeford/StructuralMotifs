@@ -899,7 +899,7 @@ class StruM(object):
         self.updated = True
 
     def translate_func(self, f_seq, **kwargs):
-        """Convert sequence from string to structural representation,
+        """Convert sequence from string to structural representation, \
             with additional features.
 
         :param seq: DNA sequence, all uppercase characters,
