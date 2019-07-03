@@ -1177,7 +1177,7 @@ cdef inline double norm_p(double x, double mu, double sd) nogil:
     if z > 0:
         z = -z
     p = normalCDF(z)
-    return p
+    return p + 10.e-300
 
 cpdef inline str rev_comp(str seq):
     """Reverse complement a DNA sequence.
